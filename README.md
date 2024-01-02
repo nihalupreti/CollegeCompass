@@ -8,9 +8,9 @@ Web Application made using django and react.
 
 ## Credentials
 
-for **/admin**
-username: admin
-password: admin
+for **/admin**\
+username: admin\
+password: admin\
 email: niajh.edd@gmail.com
 
 ## Installation
@@ -31,7 +31,7 @@ Firstly, open terminal in CollegeCompass dir where **manage.py** is located and 
   python manage.py runserver
 ```
 
-Note: if error occurs repplace **python** with **python3**. If the error presists check if python is installed in you system.
+Note: if error occurs replace **python** with **python3**. If the error presists check if python is installed in you system.
 
 Then after running the django server open teminal in **frontend** dir which is nested inside
 **CollegeCompass** dir and run the following command.
