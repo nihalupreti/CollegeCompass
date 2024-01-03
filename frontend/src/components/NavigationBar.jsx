@@ -1,4 +1,10 @@
+import { useState } from "react";
+
+import LoginModal from "./LoginModal";
+
 export default function NavigationBar() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const temporaryStyle = {
     fontFamily: "Roboto, sans-serif",
     color: "#828282",
@@ -28,7 +34,20 @@ export default function NavigationBar() {
             </li>
           </ul>
         </nav>
-        <button className="auth-button">Log In</button>
+        <button
+          className="auth-button"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          Log In
+        </button>
+        <LoginModal
+          isOpen={isModalOpen}
+          onRequestClose={() => {
+            setIsModalOpen(false);
+          }}
+        />
       </section>
       <div className="nav-text">
         {/* <!-- just a dummy value. will be changed later --> */}
