@@ -1,5 +1,5 @@
-import "./login.css";
 import Modal from "react-modal";
+import styles from "./LoginModal.module.css"; // Import the CSS module
 
 export default function LoginModal({ isOpen, onRequestClose }) {
   return (
@@ -8,18 +8,18 @@ export default function LoginModal({ isOpen, onRequestClose }) {
       onRequestClose={onRequestClose}
       style={{
         content: {
-          height: "50%", // Set the desired height
-          width: "50%", // Set the desired width
-          margin: "auto", // Center horizontally
-          top: "50%", // Center vertically
+          height: "85%",
+          width: "45%",
+          top: "50%",
           left: "50%",
-          transform: "translate(-50%, -50%)", // Adjust for both vertical and horizontal centering
+          transform: "translate(-50%, -50%)",
+          padding: 0,
+          borderRadius: "10px",
         },
       }}
-      // additional props and styles can be added here
     >
-      <div className="login-container">
-        <header>
+      <div>
+        <header className={styles.header}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="40"
@@ -33,20 +33,23 @@ export default function LoginModal({ isOpen, onRequestClose }) {
           </svg>
           <h3>Log in or sign up</h3>
         </header>
-        <section className="login-form">
+        <section className={styles.loginForm}>
           <h2>Welcome to CollegeCompass</h2>
-          <div className="input-field">
+          <div className={styles.inputField}>
             <input
               type="text"
-              className="username-field"
+              className={styles.usernameField}
               placeholder="Username"
             />
             <input
               type="password"
-              className="password-field"
+              className={`${styles.passwordField} ${styles.usernameField}`}
               placeholder="Password"
             />
           </div>
+          <button type="submit" className={styles.formSubmit}>
+            Continue
+          </button>
         </section>
       </div>
     </Modal>

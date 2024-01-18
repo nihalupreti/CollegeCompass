@@ -15,22 +15,22 @@ export default function NavigationBar() {
         <div className="brand">
           <a href="#">
             <img src="logo.png" alt="brand logo" className="brand-logo" />
-            <h1 className="brand-name">Psycozi</h1>
+            <h1 className="brand-name">CollegeCompass</h1>
           </a>
         </div>
         <nav>
           <ul className="nav-items">
             <li className="nav-item">
-              <a href="">Find a therapist</a>
+              <a href="">Colleges</a>
             </li>
             <li className="nav-item">
               <a href="">Get Help</a>
             </li>
             <li className="nav-item">
-              <a href="">Magazine</a>
+              <a href="">Compare</a>
             </li>
             <li className="nav-item">
-              <a href="">Today</a>
+              <a href="">About</a>
             </li>
           </ul>
         </nav>

@@ -8,6 +8,7 @@ class College(models.Model):
     email = models.EmailField()
     affiliation = models.CharField(max_length=30)
     excerpt = models.TextField()
+    college_image = models.ImageField(upload_to = "images/", null=True, blank=True)
 
     def __str__(self):
         return self.college_name + self.address + self.affiliation

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import PreviewCard from "./components/PreviewCard";
 import NavigationBar from "./components/NavigationBar";
+import Filter from "./components/Filter";
 
 function App() {
   const [collegeData, setCollegeData] = useState([]);
@@ -21,7 +22,7 @@ function App() {
     <>
       <NavigationBar />
       <main>
-        {/* filter section */}
+        <Filter />
         <div className="all-cards">
           {collegeData.map((college) => (
             <PreviewCard
@@ -32,6 +33,7 @@ function App() {
               address={college.address}
               phone_no={college.phone_no}
               email={college.email}
+              college_image={college.college_image}
             />
           ))}
         </div>

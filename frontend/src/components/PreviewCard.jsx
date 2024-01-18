@@ -5,15 +5,15 @@ export default function PreviewCard({
   address,
   phone_no,
   email,
+  college_image,
 }) {
+  const imagePath = `http://localhost:8000${college_image}`;
+  console.log("imagePath:", imagePath);
   return (
     <div className="feature-card">
       <div className="card-container">
         <div className="profile-image__container">
-          <img
-            src="https://img.freepik.com/premium-photo/her-skills-are-demand-trendy-office-worker-formal-casual-fashion-style-stylish-woman-hold-office-folder-girl-follow-dress-code-confident-businesswoman-with-documents-elegant-woman-jacket_474717-20797.jpg?w=2000"
-            alt=""
-          />
+          <img src={imagePath} alt="College-image" />
         </div>
         <div className="detail-container">
           <h3>{college_name}</h3>
