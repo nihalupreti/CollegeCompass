@@ -1,7 +1,38 @@
 import Modal from "react-modal";
-import styles from "./LoginModal.module.css"; // Import the CSS module
+import styles from "./LoginModal.module.css";
+import axios from "axios";
+import { useState } from "react";
 
 export default function LoginModal({ isOpen, onRequestClose }) {
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/login_credentials/",
+        {
+          username: userData.username,
+          password: userData.password,
+        }
+      );
+
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -40,14 +71,22 @@ export default function LoginModal({ isOpen, onRequestClose }) {
               type="text"
               className={styles.usernameField}
               placeholder="Username"
+              name="username"
+              onChange={handleChange}
             />
             <input
               type="password"
               className={`${styles.passwordField} ${styles.usernameField}`}
               placeholder="Password"
+              name="password"
+              onChange={handleChange}
             />
           </div>
-          <button type="submit" className={styles.formSubmit}>
+          <button
+            type="submit"
+            className={styles.formSubmit}
+            onClick={handleSubmit}
+          >
             Continue
           </button>
         </section>
