@@ -38,6 +38,9 @@ export default function LoginModal({ isOpen, onRequestClose }) {
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       style={{
+        overlay: {
+          backgroundColor: "rgb(0 0 0 / 79%)", // Set the background color for the overlay
+        },
         content: {
           height: "85%",
           width: "45%",
