@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('college/', views.collegeData),
     path('login_credentials/', views.login_credentials.as_view()),
+    path('search_colleges/' ,views.SearchView.as_view())
 ]
 
 # Configuration for serving media files during development

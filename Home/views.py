@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import status
 from . import models
-from .serializer import CollegeSerializer, CredentialsSerializer
+from .serializer import CollegeSerializer, CredentialsSerializer, CollegeSearchSerializer
 
 @api_view(['GET'])
 def collegeData(request):
@@ -27,3 +27,11 @@ class login_credentials(APIView):
             return Response({'success': True, 'message': 'Data received successfully'},status=200)
         else:
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
+
+class SearchView(APIView):
+    def get(self, request):
+        query = request.query_params.get('q', '')
+        print("hello" +query)
+        results = models.College.objects.filter(college_name__istartswith=query)[:10]
+        serializer = CollegeSearchSerializer(results, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

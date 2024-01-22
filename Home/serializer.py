@@ -9,3 +9,8 @@ class CollegeSerializer(serializers.ModelSerializer):
 class CredentialsSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()
+
+class CollegeSearchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.College
+        fields = ['id', 'college_name', 'address']

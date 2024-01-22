@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import PreviewCard from "./components/PreviewCard";
@@ -24,26 +24,31 @@ function App() {
     <Router>
       <NavigationBar />
       <main>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/colleges">
-          <Filter />
-          <div className="all-cards">
-            {collegeData.map((college) => (
-              <PreviewCard
-                key={college.id}
-                college_name={college.college_name}
-                affiliation={college.affiliation}
-                excerpt={college.excerpt}
-                address={college.address}
-                phone_no={college.phone_no}
-                email={college.email}
-                college_image={college.college_image}
-              />
-            ))}
-          </div>
-        </Route>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/colleges"
+            element={
+              <>
+                <Filter />
+                <div className="all-cards">
+                  {collegeData.map((college) => (
+                    <PreviewCard
+                      key={college.id}
+                      college_name={college.college_name}
+                      affiliation={college.affiliation}
+                      excerpt={college.excerpt}
+                      address={college.address}
+                      phone_no={college.phone_no}
+                      email={college.email}
+                      college_image={college.college_image}
+                    />
+                  ))}
+                </div>
+              </>
+            }
+          />
+        </Routes>
       </main>
     </Router>
   );
