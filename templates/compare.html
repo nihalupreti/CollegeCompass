@@ -6,15 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CollegeCompass</title>
     <style>
-        html, body {
-            height: 100%;
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f2f2f2;
-        }
-
-        body {
             display: flex;
             flex-direction: column;
         }
@@ -47,36 +43,19 @@
 
         .container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: stretch;
             flex-grow: 1;
+            padding: 10px;
         }
 
         .column {
-            width: 45%; /* Adjusted width */
+            width: 48%;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin: 10px;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-
-        .user-info img {
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .logout-btn {
-            background-color: #d9534f;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            box-sizing: border-box;
         }
 
         .search-bar {
@@ -84,7 +63,7 @@
             padding: 10px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px 0;
+            margin-bottom: 10px;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
@@ -92,7 +71,7 @@
         }
 
         .search-bar input {
-            width: 80%;
+            width: 70%;
             padding: 8px;
             margin-right: 10px;
             border: 1px solid #ccc;
@@ -123,13 +102,12 @@
         <a href="#">Settings</a>
     </nav>
 
-    <div class="search-bar">
-        <input type="text" id="leftCollegeSearch" placeholder="Search for college in left column...">
-        <button onclick="performLeftSearch()">Search Left</button>
-    </div>
-
     <div class="container">
         <div class="column" id="leftColumn">
+            <div class="search-bar">
+                <input type="text" id="leftCollegeSearch" placeholder="Search for college in left column...">
+                <button onclick="performLeftSearch()">Search Left</button>
+            </div>
             <!-- Left column content goes here -->
             {% if left_college_info %}
             <h2>{{ left_college_info.college_name }}</h2>
@@ -140,15 +118,12 @@
             <p>No results in left column.</p>
             {% endif %}
         </div>
-    </div>
 
-    <div class="search-bar">
-        <input type="text" id="rightCollegeSearch" placeholder="Search for college in right column...">
-        <button onclick="performRightSearch()">Search Right</button>
-    </div>
-
-    <div class="container">
         <div class="column" id="rightColumn">
+            <div class="search-bar">
+                <input type="text" id="rightCollegeSearch" placeholder="Search for college in right column...">
+                <button onclick="performRightSearch()">Search Right</button>
+            </div>
             <!-- Right column content goes here -->
             {% if right_college_info %}
             <h2>{{ right_college_info.college_name }}</h2>
