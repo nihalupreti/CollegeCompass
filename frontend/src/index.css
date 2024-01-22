@@ -1,4 +1,4 @@
-h1,
+/* h1,
 h2,
 h3,
 h4,
@@ -6,7 +6,7 @@ h5,
 h6 {
   margin: 0;
   padding: 0;
-}
+} */
 
 body {
   margin: 0;
@@ -172,7 +172,7 @@ main {
 /* filter section */
 
 .filter-section {
-  width: 25%;
+  width: 35%;
   margin-right: 10px;
   border-radius: 8px;
   padding: 10px;
@@ -222,6 +222,7 @@ main {
 .profile-image__container {
   height: 200px;
   margin: 20px;
+  width: 300px;
 }
 
 .profile-image__container img {
@@ -280,11 +281,14 @@ main {
   width: 350px;
   justify-content: center;
   margin: 20px;
+  padding: 10px;
 }
 
 .contact-card__detail {
   color: #828282;
   font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 .info {
@@ -319,6 +323,11 @@ svg {
 .more-info__buttons button:nth-child(2) {
   background-color: #2276fd;
   color: white;
+}
+
+.active {
+  color: black;
+  border-bottom: 1px solid black;
 }
 
 /* loop */
