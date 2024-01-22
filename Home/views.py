@@ -29,18 +29,42 @@ class Compare(Base):
         self.views = {}
 
         # Handle search logic
-        college_name = request.GET.get('college_name', '')
+        college_name = request.GET.get('college_name', '').strip()  # Strip whitespace from the search term
 
-        if college_name:
-            # If a search term is provided, filter colleges based on the search term
-            excerpt = College.objects.filter(college_name__icontains=college_name).first()
-            self.views['college_info'] = excerpt
-        else:
-            # If no search term is provided, render the page without search results
-            self.views['college_info'] = None
+        # Check if the search term is empty or contains only whitespaces
+        if not college_name:
+            # If the search term is empty, render the page without results
+            self.views['left_college_info'] = None
+            self.views['right_college_info'] = None
+            self.views['colleges'] = College.objects.all()
+            return render(request, 'compare.html', self.views)
 
         # Retrieve all colleges for the right column
         self.views['colleges'] = College.objects.all()
+
+        # Check the column parameter and set the appropriate view for rendering
+        column = request.GET.get('column', '')  # Get the column parameter
+
+        if column == 'left':
+            # If searching in the left column, update left_college_info and store it in the session
+            left_college_info = College.objects.filter(college_name__icontains=college_name).first()
+            request.session['left_college_info'] = {
+                'college_name': left_college_info.college_name if left_college_info else None,
+                'address': left_college_info.address if left_college_info else None,
+                'fee': left_college_info.fee if left_college_info else None,
+                # Add other fields as needed
+            }
+            right_college_info = None
+        elif column == 'right':
+            # If searching in the right column, update right_college_info
+            right_college_info = College.objects.filter(college_name__icontains=college_name).first()
+            left_college_info = request.session.get('left_college_info')
+        else:
+            left_college_info = None
+            right_college_info = None
+
+        self.views['left_college_info'] = left_college_info
+        self.views['right_college_info'] = right_college_info
 
         # Render the compare.html template
         return render(request, 'compare.html', self.views)

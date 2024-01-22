@@ -124,52 +124,54 @@
     </nav>
 
     <div class="search-bar">
-        <input type="text" id="collegeSearch" placeholder="Search for college...">
-
-        <button onclick="performSearch()">Search</button>
+        <input type="text" id="leftCollegeSearch" placeholder="Search for college in left column...">
+        <button onclick="performLeftSearch()">Search Left</button>
     </div>
 
-<!-- Update compare.html -->
-
-<div class="container">
-    <div class="column" id="leftColumn">
-        <!-- Left column content goes here -->
-
-        {% if college_info %}
-        <h2>{{ college_info.college_name }}</h2>
-        <p>Address: {{ college_info.address }}</p>
-        <p>Fee: {{ college_info.fee }}</p>
-        <!-- Add other fields as needed -->
-        {% else %}
-        <p>No results in left column.</p>
-        {% endif %}
+    <div class="container">
+        <div class="column" id="leftColumn">
+            <!-- Left column content goes here -->
+            {% if left_college_info %}
+            <h2>{{ left_college_info.college_name }}</h2>
+            <p>Address: {{ left_college_info.address }}</p>
+            <p>Fee: {{ left_college_info.fee }}</p>
+            <!-- Add other fields as needed -->
+            {% else %}
+            <p>No results in left column.</p>
+            {% endif %}
+        </div>
     </div>
-    <div class="column" id="rightColumn">
-        {% if college_info %}
-        <h2>{{ college_info.college_name }}</h2>
-        <p>Address: {{ college_info.address }}</p>
-        <p>Fee: {{ college_info.fee }}</p>
-        <!-- Add other fields as needed -->
-        {% else %}
-        <p>No results in left column.</p>
-        {% endif %}
+
+    <div class="search-bar">
+        <input type="text" id="rightCollegeSearch" placeholder="Search for college in right column...">
+        <button onclick="performRightSearch()">Search Right</button>
     </div>
-</div>
 
-<script>
-    function performSearch() {
-        // Get the value from the search input
-        var collegeName = document.getElementById('collegeSearch').value;
+    <div class="container">
+        <div class="column" id="rightColumn">
+            <!-- Right column content goes here -->
+            {% if right_college_info %}
+            <h2>{{ right_college_info.college_name }}</h2>
+            <p>Address: {{ right_college_info.address }}</p>
+            <p>Fee: {{ right_college_info.fee }}</p>
+            <!-- Add other fields as needed -->
+            {% else %}
+            <p>No results in right column.</p>
+            {% endif %}
+        </div>
+    </div>
 
-        // Redirect to the compare view with the search parameter
-        window.location.href = "/compare/?college_name=" + collegeName;
-    }
-</script>
+    <script>
+        function performLeftSearch() {
+            var collegeName = document.getElementById('leftCollegeSearch').value;
+            window.location.href = "/compare/?college_name=" + collegeName + "&column=left";
+        }
 
+        function performRightSearch() {
+            var collegeName = document.getElementById('rightCollegeSearch').value;
+            window.location.href = "/compare/?college_name=" + collegeName + "&column=right";
+        }
+    </script>
 
 </body>
-
-
-
-
 </html>
