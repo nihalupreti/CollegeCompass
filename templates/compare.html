@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -52,7 +53,7 @@
         }
 
         .column {
-            width: 30%; /* Adjusted width */
+            width: 45%; /* Adjusted width */
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -123,22 +124,52 @@
     </nav>
 
     <div class="search-bar">
-        <input type="text" placeholder="Search for college...">
-        <button>Search</button>
+        <input type="text" id="collegeSearch" placeholder="Search for college...">
+
+        <button onclick="performSearch()">Search</button>
     </div>
 
-    <div class="container">
-        <div class="column">
-            <!-- Left column content goes here -->
-            <h2>Left Column</h2>
-            <p>Your content goes here.</p>
-        </div>
-        <div class="column">
-            <!-- Right column content goes here -->
-            <h2>Right Column</h2>
-            <p>Your content goes here.</p>
-        </div>
+<!-- Update compare.html -->
+
+<div class="container">
+    <div class="column" id="leftColumn">
+        <!-- Left column content goes here -->
+
+        {% if college_info %}
+        <h2>{{ college_info.college_name }}</h2>
+        <p>Address: {{ college_info.address }}</p>
+        <p>Fee: {{ college_info.fee }}</p>
+        <!-- Add other fields as needed -->
+        {% else %}
+        <p>No results in left column.</p>
+        {% endif %}
     </div>
+    <div class="column" id="rightColumn">
+        {% if college_info %}
+        <h2>{{ college_info.college_name }}</h2>
+        <p>Address: {{ college_info.address }}</p>
+        <p>Fee: {{ college_info.fee }}</p>
+        <!-- Add other fields as needed -->
+        {% else %}
+        <p>No results in left column.</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function performSearch() {
+        // Get the value from the search input
+        var collegeName = document.getElementById('collegeSearch').value;
+
+        // Redirect to the compare view with the search parameter
+        window.location.href = "/compare/?college_name=" + collegeName;
+    }
+</script>
+
 
 </body>
+
+
+
+
 </html>

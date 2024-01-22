@@ -4,15 +4,11 @@ from django.urls import path
 from . import views
 from .views import *
 
-
 urlpatterns = [
     path('college/', views.collegeData),
-<<<<<<< HEAD
-    path('compare/', Compare.as_view(), name='compare'),
 
-=======
-    path('login_credentials/', views.login_credentials.as_view()),
->>>>>>> 52f310ee8a090b7f0d22f23f0c9ef597e5c2e813
+    path('compare/', Compare.as_view(), name='compare'),
+    path('login_credentials/', LoginCredentials.as_view(), name='login'),
 ]
 
 # Configuration for serving media files during development
