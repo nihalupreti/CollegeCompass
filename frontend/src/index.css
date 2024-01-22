@@ -43,10 +43,26 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* position: fixed;    to be fixed later */
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.top-bar__section.scrolled {
+  background-color: black;
+  color: white;
+}
+
+.top-bar__section.scrolled .nav-items a {
+  color: white;
+}
+
+.top-bar__section.scrolled .brand-name {
+  color: white;
 }
 
 .brand {
-  margin-left: 40px;
+  margin-left: 60px;
 }
 
 .brand img {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import LoginModal from "./LoginModal";
 import SearchBar from "./SearchBar";
@@ -8,13 +8,18 @@ export default function NavigationBar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePage, setActivePage] = useState("Home");
 
+  const location = useLocation(); //gives route path
+  console.log(location.pathname);
+
   const temporaryStyle = {
     fontFamily: "Roboto, sans-serif",
     color: "#828282",
   };
 
+  const headerHeight = location.pathname === "/colleges" ? "350px" : "100px";
+
   return (
-    <header className="main-header">
+    <header className="main-header" style={{ height: headerHeight }}>
       <section className="top-bar__section">
         <div className="brand">
           <Link to="/">
@@ -62,11 +67,17 @@ export default function NavigationBar() {
           onRequestClose={() => setIsModalOpen(false)}
         />
       </section>
-      <div className="nav-text">
-        <p style={temporaryStyle}>Home &gt; New York &gt; New York</p>
-      </div>
-      <div className="background-image"></div>
-      <SearchBar />
+      {location.pathname === "/colleges" ? (
+        <div>
+          <div className="nav-text">
+            <p style={temporaryStyle}>Home &gt; New York &gt; New York</p>
+          </div>
+          <div className="background-image"></div>
+          <SearchBar />{" "}
+        </div>
+      ) : (
+        ""
+      )}
     </header>
   );
 }
