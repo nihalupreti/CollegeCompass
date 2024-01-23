@@ -2,11 +2,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from . import views
+from .views import *
 
 urlpatterns = [
     path('college/', views.collegeData),
-    path('login_credentials/', views.login_credentials.as_view()),
-    path('search_colleges/' ,views.SearchView.as_view())
+    path('login_credentials/', views.LoginCredentials.as_view(), name='login'),
+    path('search_colleges/' ,views.SearchView.as_view()),
+    path('compare/', Compare.as_view(), name='compare'),
 ]
 
 # Configuration for serving media files during development
