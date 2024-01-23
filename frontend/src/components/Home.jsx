@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import "./home.css";
 import {
   LogoFacebook,
@@ -8,20 +7,6 @@ import {
 } from "react-ionicons";
 
 const Home = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.querySelector(".top-bar__section");
-      if (window.scrollY > 0) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <div className="body">
       <section className="main-section">

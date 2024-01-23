@@ -11,6 +11,20 @@ function App() {
   const [collegeData, setCollegeData] = useState([]);
 
   useEffect(() => {
+    const handleScroll = () => {
+      const header = document.querySelector(".top-bar__section");
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
     axios
       .get("http://localhost:8000/college/")
       .then((response) => {
@@ -18,38 +32,36 @@ function App() {
         setCollegeData(response.data);
       })
       .catch((error) => console.error("Error fetching data:", error));
-  }, []); // Empty dependency array ensures the effect runs once when the component mounts
+  }, []);
 
   return (
     <Router>
       <NavigationBar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/colleges"
-            element={
-              <>
-                <Filter />
-                <div className="all-cards">
-                  {collegeData.map((college) => (
-                    <PreviewCard
-                      key={college.id}
-                      college_name={college.college_name}
-                      affiliation={college.affiliation}
-                      excerpt={college.excerpt}
-                      address={college.address}
-                      phone_no={college.phone_no}
-                      email={college.email}
-                      college_image={college.college_image}
-                    />
-                  ))}
-                </div>
-              </>
-            }
-          />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/colleges"
+          element={
+            <main>
+              <Filter />
+              <div className="all-cards">
+                {collegeData.map((college) => (
+                  <PreviewCard
+                    key={college.id}
+                    college_name={college.college_name}
+                    affiliation={college.affiliation}
+                    excerpt={college.excerpt}
+                    address={college.address}
+                    phone_no={college.phone_no}
+                    email={college.email}
+                    college_image={college.college_image}
+                  />
+                ))}
+              </div>
+            </main>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

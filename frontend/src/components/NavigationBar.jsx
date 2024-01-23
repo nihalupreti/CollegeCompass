@@ -16,7 +16,7 @@ export default function NavigationBar() {
     color: "#828282",
   };
 
-  const headerHeight = location.pathname === "/colleges" ? "350px" : "100px";
+  const headerHeight = location.pathname === "/colleges" ? "320px" : "0px";
 
   return (
     <header className="main-header" style={{ height: headerHeight }}>
@@ -68,7 +68,7 @@ export default function NavigationBar() {
         />
       </section>
       {location.pathname === "/colleges" ? (
-        <div>
+        <div className="location-section">
           <div className="nav-text">
             <p style={temporaryStyle}>Home &gt; New York &gt; New York</p>
           </div>
