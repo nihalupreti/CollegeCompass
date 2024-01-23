@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from . import models
 from .serializer import CollegeSerializer, CredentialsSerializer, CollegeSearchSerializer
-from .models import *
+
 from django.views.generic import View
 
 

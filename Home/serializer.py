@@ -13,4 +13,4 @@ class CredentialsSerializer(serializers.Serializer):
 class CollegeSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.College
-        fields = ['id', 'college_name', 'address']
+        fields = ['id', 'college_name', 'address',]

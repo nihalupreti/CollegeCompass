@@ -6,6 +6,7 @@ import PreviewCard from "./components/PreviewCard";
 import NavigationBar from "./components/NavigationBar";
 import Filter from "./components/Filter";
 import Home from "./components/Home";
+import Compare from "./components/compare";
 
 function App() {
   const [collegeData, setCollegeData] = useState([]);
@@ -61,6 +62,7 @@ function App() {
             </main>
           }
         />
+        <Route path="/compare" element={<Compare />} />
       </Routes>
     </Router>
   );
