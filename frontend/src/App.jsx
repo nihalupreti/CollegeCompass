@@ -10,6 +10,7 @@ import Compare from "./components/compare";
 
 function App() {
   const [collegeData, setCollegeData] = useState([]);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,9 +28,13 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/college/")
+      .get("http://localhost:8000/college/", {
+        withCredentials: true,
+      })
       .then((response) => {
-        console.log(response);
+        if (response.status === 200) {
+          setAuthenticated(true);
+        }
         setCollegeData(response.data);
       })
       .catch((error) => console.error("Error fetching data:", error));
@@ -37,7 +42,7 @@ function App() {
 
   return (
     <Router>
-      <NavigationBar />
+      <NavigationBar isLogged={authenticated} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route

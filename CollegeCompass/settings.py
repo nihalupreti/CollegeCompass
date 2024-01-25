@@ -28,10 +28,26 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#  SameSite=None for cross-origin cookies
+SESSION_COOKIE_SAMESITE = None
+CSRF_COOKIE_SAMESITE = None
 
+#  Secure=True if using HTTPS
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# HttpOnly=True for added security
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
 ]
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'

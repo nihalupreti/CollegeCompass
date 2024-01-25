@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from . import models
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from .serializer import CollegeSerializer, LoginCredentialsSerializer, CollegeSearchSerializer, SignupCredentialsSerializer
 from django.views.generic import View
 
@@ -19,7 +20,10 @@ class Base(View):
 def collegeData(request):
     college_data = models.College.objects.all()
     data_serializer = CollegeSerializer(college_data, many=True)
-    return Response(data_serializer.data)
+    if request.user.is_authenticated:
+         return Response(data_serializer.data, status=status.HTTP_200_OK)
+    else:
+         return Response(data_serializer.data, status=status.HTTP_401_UNAUTHORIZED)
 
 
 
@@ -68,6 +72,7 @@ class Compare(Base):
 
         # Render the compare.html template
         return render(request, 'compare.html', self.views)
+
 
 class LoginCredentials(APIView):
     def post(self, request, *args, **kwargs):

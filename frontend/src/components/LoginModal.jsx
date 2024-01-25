@@ -22,11 +22,13 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
     try {
       const response = await axios.post(
         "http://localhost:8000/login_credentials/",
+
         {
           email: userData.email,
           password: userData.password,
         },
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },

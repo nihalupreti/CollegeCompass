@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 import SignUpModal from "./SignUpModal";
 import AvatarDropdown from "./AvatarDropdown";
 
-export default function NavigationBar() {
+export default function NavigationBar({ isLogged }) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -68,7 +68,7 @@ export default function NavigationBar() {
           </ul>
         </nav>
         <div className="auth">
-          {isLoggedIn ? (
+          {isLoggedIn || isLogged ? (
             <AvatarDropdown /> // Render AvatarComponent if user is logged in
           ) : (
             <>
