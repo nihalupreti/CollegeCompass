@@ -1,0 +1,104 @@
+.userMenuWrap {
+  position: relative;
+  width: 36px;
+}
+
+.menuContainer {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.menuContainer.active {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.userMenu {
+  position: absolute;
+  right: -22px;
+  background-color: #ffffff;
+  width: 250px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 20px;
+}
+
+.userMenu .profileHighlight {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px;
+  margin-bottom: 6px;
+}
+
+.userMenu .profileHighlight img {
+  width: 48px;
+  height: 48px;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+.userMenu .profileHighlight .details {
+  display: flex;
+  flex-direction: column;
+  margin: auto 12px;
+}
+
+.userMenu .profileHighlight .details #profileName {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.userMenu .footer {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 6px;
+  margin-top: 6px;
+}
+
+.userMenu .footer .userMenuLink {
+  font-size: 13px;
+}
+
+.userMenu .userMenuLink {
+  display: flex;
+  text-decoration: none;
+  color: #333333;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 5px 16px;
+}
+
+.userMenu .userMenuLink div {
+  margin: auto 10px;
+}
+
+.userMenu .userMenuLink:hover {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+.userMenu:before {
+  position: absolute;
+  top: -16px;
+  left: 120px;
+  display: inline-block;
+  content: "";
+  border: 8px solid transparent;
+  border-bottom-color: #e0e0e0;
+}
+
+.userMenu:after {
+  position: absolute;
+  top: -14px;
+  left: 121px;
+  display: inline-block;
+  content: "";
+  border: 7px solid transparent;
+  border-bottom-color: #ffffff;
+}
+
+.miniPhoto {
+  border-radius: 50%;
+}

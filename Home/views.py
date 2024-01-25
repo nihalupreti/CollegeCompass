@@ -79,11 +79,11 @@ class LoginCredentials(APIView):
                                 password=password)
             if user is not None:
                 login(request, user)
+                return Response({'success': True, 'message': 'Data validated sucessfully'}, status=200)
                 print("logged in ")
             else:
                 return Response({'message': 'Invalid Credentials'}, status=200)
             
-            return Response({'success': True, 'message': 'Data validated sucessfully'}, status=200)
         else:
             print(serializer.errors)
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)

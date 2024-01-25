@@ -3,7 +3,7 @@ import styles from "./AuthModal.module.css";
 import axios from "axios";
 import { useState } from "react";
 
-export default function LoginModal({ isOpen, onRequestClose }) {
+export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -32,6 +32,14 @@ export default function LoginModal({ isOpen, onRequestClose }) {
           },
         }
       );
+      if (response.status === 200) {
+        // Call the callback function to notify the parent component about the successful login
+        onLoginSuccess();
+        onRequestClose(); // Close the modal
+      } else {
+        // Handle unsuccessful login
+        console.error("Login failed");
+      }
 
       console.log("Response:", response.data);
     } catch (error) {

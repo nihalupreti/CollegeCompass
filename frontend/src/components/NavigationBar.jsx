@@ -4,10 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SearchBar from "./SearchBar";
 import SignUpModal from "./SignUpModal";
+import AvatarDropdown from "./AvatarDropdown";
 
 export default function NavigationBar() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activePage, setActivePage] = useState("Home");
 
   const location = useLocation(); //gives route path
@@ -19,6 +21,10 @@ export default function NavigationBar() {
   };
 
   const headerHeight = location.pathname === "/colleges" ? "320px" : "0px";
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true); // Update the state to indicate that the user is logged in
+  };
 
   return (
     <header className="main-header" style={{ height: headerHeight }}>
@@ -62,22 +68,29 @@ export default function NavigationBar() {
           </ul>
         </nav>
         <div className="auth">
-          <button
-            className="auth-button signup-button"
-            onClick={() => setIsSignupModalOpen(true)}
-          >
-            Sign Up
-          </button>
-          <button
-            className="auth-button signin-button"
-            onClick={() => setIsLoginModalOpen(true)}
-          >
-            Log In
-          </button>
+          {isLoggedIn ? (
+            <AvatarDropdown /> // Render AvatarComponent if user is logged in
+          ) : (
+            <>
+              <button
+                className="auth-button signup-button"
+                onClick={() => setIsSignupModalOpen(true)}
+              >
+                Sign Up
+              </button>
+              <button
+                className="auth-button signin-button"
+                onClick={() => setIsLoginModalOpen(true)}
+              >
+                Log In
+              </button>
+            </>
+          )}
         </div>
         <LoginModal
           isOpen={isLoginModalOpen}
           onRequestClose={() => setIsLoginModalOpen(false)}
+          onLoginSuccess={handleLoginSuccess}
         />
         <SignUpModal
           isOpen={isSignupModalOpen}
