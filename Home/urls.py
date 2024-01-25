@@ -7,6 +7,7 @@ from .views import *
 urlpatterns = [
     path('college/', views.collegeData),
     path('login_credentials/', views.LoginCredentials.as_view(), name='login'),
+    path('signup_credentials/', views.SignupCredentials.as_view(), name='signup'),
     path('search_colleges/' ,views.SearchView.as_view()),
     path('compare/', Compare.as_view(), name='compare'),
 ]

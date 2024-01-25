@@ -3,9 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 
 import LoginModal from "./LoginModal";
 import SearchBar from "./SearchBar";
+import SignUpModal from "./SignUpModal";
 
 export default function NavigationBar() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const [activePage, setActivePage] = useState("Home");
 
   const location = useLocation(); //gives route path
@@ -59,12 +61,27 @@ export default function NavigationBar() {
             </li>
           </ul>
         </nav>
-        <button className="auth-button" onClick={() => setIsModalOpen(true)}>
-          Log In
-        </button>
+        <div className="auth">
+          <button
+            className="auth-button signup-button"
+            onClick={() => setIsSignupModalOpen(true)}
+          >
+            Sign Up
+          </button>
+          <button
+            className="auth-button signin-button"
+            onClick={() => setIsLoginModalOpen(true)}
+          >
+            Log In
+          </button>
+        </div>
         <LoginModal
-          isOpen={isModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
+          isOpen={isLoginModalOpen}
+          onRequestClose={() => setIsLoginModalOpen(false)}
+        />
+        <SignUpModal
+          isOpen={isSignupModalOpen}
+          onRequestClose={() => setIsSignupModalOpen(false)}
         />
       </section>
       {location.pathname === "/colleges" ? (

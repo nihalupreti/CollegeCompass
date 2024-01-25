@@ -99,13 +99,33 @@ a {
   color: black;
 }
 
+.auth {
+  margin-right: 30px;
+}
+
 .auth-button {
   background-color: #3b83f7;
   padding: 15px 25px;
   border-radius: 7px;
   color: white;
   border: none;
-  margin: 0 50px;
+  margin: 0 10px;
+}
+
+.auth :nth-child(2):hover {
+  cursor: pointer;
+  background-color: #2976f2;
+}
+
+.signup-button {
+  background-color: transparent;
+  color: #3b83f7;
+  font-weight: 500;
+}
+
+.signup-button:hover {
+  color: #619cfa;
+  cursor: pointer;
 }
 
 /* ...........nav bar style  */

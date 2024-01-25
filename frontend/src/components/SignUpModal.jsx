@@ -3,10 +3,11 @@ import styles from "./AuthModal.module.css";
 import axios from "axios";
 import { useState } from "react";
 
-export default function LoginModal({ isOpen, onRequestClose }) {
+export default function SignUpModal({ isOpen, onRequestClose }) {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (event) => {
@@ -20,10 +21,11 @@ export default function LoginModal({ isOpen, onRequestClose }) {
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/login_credentials/",
+        "http://localhost:8000/signup_credentials/",
         {
           email: userData.email,
           password: userData.password,
+          confirmPassword: userData.confirmPassword,
         }
       );
 
@@ -39,7 +41,7 @@ export default function LoginModal({ isOpen, onRequestClose }) {
       onRequestClose={onRequestClose}
       style={{
         overlay: {
-          backgroundColor: "rgb(0 0 0 / 79%)", // Set the background color for the overlay
+          backgroundColor: "rgb(0 0 0 / 79%)",
         },
         content: {
           height: "auto",
@@ -49,14 +51,14 @@ export default function LoginModal({ isOpen, onRequestClose }) {
           transform: "translate(-50%, -50%)",
           padding: 0,
           borderRadius: "10px",
-          overflow: "none ",
+          overflow: "none",
           maxWidth: "430px",
         },
       }}
     >
       <div className={`${styles.form} ${styles.login}`}>
         <div className={styles.formContent}>
-          <header className={styles.header__title}>Login</header>
+          <header className={styles.header__title}>Signup</header>
           <form action="#">
             <div className={`${styles.field} ${styles.inputField}`}>
               <input
@@ -68,7 +70,7 @@ export default function LoginModal({ isOpen, onRequestClose }) {
               />
             </div>
 
-            <div className={`${styles.field} ${styles.inputField}`}>
+            <div className={` ${styles.field} ${styles.inputField}`}>
               <input
                 type="password"
                 name="password"
@@ -76,25 +78,29 @@ export default function LoginModal({ isOpen, onRequestClose }) {
                 className={styles.password}
                 onChange={handleChange}
               />
+            </div>
+
+            <div className={`${styles.field} ${styles.inputField}`}>
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                className={styles.password}
+                onChange={handleChange}
+              />
               <i className={`bx bx-hide ${styles.eyeIcon}`}></i>
             </div>
 
-            <div className={styles.formLink}>
-              <a href="#" className={styles.forgotPass}>
-                Forgot password?
-              </a>
-            </div>
-
             <div className={`${styles.field} ${styles.buttonField}`}>
-              <button onClick={handleSubmit}>Login</button>
+              <button onClick={handleSubmit}>Signup</button>
             </div>
           </form>
 
           <div className={styles.formLink}>
             <span>
-              Dont have an account?
-              <a href="#" className={`${styles.link} ${styles.signupLink}`}>
-                Signup
+              Already have an account?
+              <a href="#" className={`${styles.link} ${styles.loginLink}`}>
+                Login
               </a>
             </span>
           </div>

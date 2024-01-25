@@ -6,9 +6,25 @@ class CollegeSerializer(serializers.ModelSerializer):
         model = models.College
         fields = '__all__'
 
-class CredentialsSerializer(serializers.Serializer):
-    username = serializers.CharField()
+class LoginCredentialsSerializer(serializers.Serializer):
+    email = serializers.EmailField()
     password = serializers.CharField()
+
+class SignupCredentialsSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    confirm_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        password = data.get('password')
+        confirm_password = data.get('confirm_password')
+
+        # Check if password and confirm_password match
+        if password != confirm_password:
+            raise serializers.ValidationError("Passwords do not match.")
+
+        return data
+
 
 class CollegeSearchSerializer(serializers.ModelSerializer):
     class Meta:
