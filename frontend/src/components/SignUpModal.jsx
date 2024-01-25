@@ -8,28 +8,38 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
     email: "",
     password: "",
     confirmPassword: "",
+    userName: "",
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(value);
     setUserData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:8000/signup_credentials/",
         {
           email: userData.email,
           password: userData.password,
-          confirmPassword: userData.confirmPassword,
+          confirm_password: userData.confirmPassword,
+          user_name: userData.userName,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
-
-      console.log("Response:", response.data);
+      if (response.status === 200) {
+        onRequestClose(); // Call the onRequestClose prop to close the modal
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -60,6 +70,15 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
         <div className={styles.formContent}>
           <header className={styles.header__title}>Signup</header>
           <form action="#">
+            <div className={` ${styles.field} ${styles.inputField}`}>
+              <input
+                type="text"
+                name="userName"
+                placeholder="username"
+                className={styles.input}
+                onChange={handleChange}
+              />
+            </div>
             <div className={`${styles.field} ${styles.inputField}`}>
               <input
                 type="email"

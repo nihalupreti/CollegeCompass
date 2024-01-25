@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from rest_framework.response import Response
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import status
 from . import models
+from django.contrib.auth.models import User
 from .serializer import CollegeSerializer, LoginCredentialsSerializer, CollegeSearchSerializer, SignupCredentialsSerializer
-
 from django.views.generic import View
 
 
@@ -21,9 +22,6 @@ def collegeData(request):
     return Response(data_serializer.data)
 
 
-# Update Compare class in views.py
-
-# Update Compare class in views.py
 
 class Compare(Base):
     def get(self, request):
@@ -71,33 +69,35 @@ class Compare(Base):
         # Render the compare.html template
         return render(request, 'compare.html', self.views)
 
-
 class LoginCredentials(APIView):
     def post(self, request, *args, **kwargs):
-        print("hello world")
         serializer = LoginCredentialsSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data['email']
             password = serializer.validated_data['password']
-            print(email)
-            print(password)
-            # authenticate the user or save the data to the database
-            return Response({'success': True, 'message': 'Data received successfully'}, status=200)
+            user = authenticate(request, email=email,
+                                password=password)
+            if user is not None:
+                login(request, user)
+                print("logged in ")
+            else:
+                return Response({'message': 'Invalid Credentials'}, status=200)
+            
+            return Response({'success': True, 'message': 'Data validated sucessfully'}, status=200)
         else:
             print(serializer.errors)
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
 
 class SignupCredentials(APIView):
     def post(self, request, *args, **kwargs):
-        print("hello world")
         serializer = SignupCredentialsSerializer(data=request.data)
         if serializer.is_valid():
             email = serializer.validated_data['email']
-            password = serializer.validated_data['password']
-            print(email)
-            print(password)
-            # authenticate the user or save the data to the database
-            return Response({'success': True, 'message': 'Data received successfully'}, status=200)
+            password = serializer.validated_data['confirm_password']
+            user_name = serializer.validated_data['user_name']
+            register_user = User.objects.create_user(username=user_name,email=email,password=password)
+            register_user.save()
+            return Response({'success': True, 'message': 'Data saved successfully'}, status=200)
         else:
             print(serializer.errors)
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
@@ -105,7 +105,10 @@ class SignupCredentials(APIView):
 class SearchView(APIView):
     def get(self, request):
         query = request.query_params.get('q', '')
-        print("hello" +query)
         results = models.College.objects.filter(college_name__istartswith=query)[:10]
         serializer = CollegeSearchSerializer(results, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class BookmarkView(APIView):
+    def post(self, request, *args, **kwargs):
+        print("test done")

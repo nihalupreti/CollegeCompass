@@ -31,7 +31,7 @@ export default function AutoComplete() {
   };
 
   return (
-    <div className="autocomplete">
+    <>
       <input
         type="text"
         className="search-input"
@@ -39,16 +39,18 @@ export default function AutoComplete() {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Nepal College of Information Technology, Balkumari"
       />
-      <ul className="suggestion-list">
-        {suggestions.map((suggestion) => (
-          <li
-            key={suggestion.id}
-            onClick={() => handleSelectSuggestion(suggestion)}
-          >
-            {suggestion.college_name}
-          </li>
-        ))}
-      </ul>
-    </div>
+      <div className="autocomplete">
+        <ul className="suggestion-list">
+          {suggestions.map((suggestion) => (
+            <li
+              key={suggestion.id}
+              onClick={() => handleSelectSuggestion(suggestion)}
+            >
+              {suggestion.college_name}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }

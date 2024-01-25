@@ -1,4 +1,8 @@
+import { useState } from "react";
+import axios from "axios";
+
 export default function PreviewCard({
+  id,
   college_name,
   affiliation,
   excerpt,
@@ -7,8 +11,25 @@ export default function PreviewCard({
   email,
   college_image,
 }) {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const toggleBookmark = async () => {
+    setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
+
+    // Send the item to the Django backend when bookmarked
+    if (!isBookmarked) {
+      try {
+        // Use the updated state value
+        await axios.post("http://localhost:8000/bookmark/", {
+          id,
+        });
+      } catch (error) {
+        console.error("Error bookmarking:", error);
+      }
+    }
+  };
+
   const imagePath = `http://localhost:8000${college_image}`;
-  console.log("imagePath:", imagePath);
   return (
     <div className="feature-card">
       <div className="card-container">
@@ -20,8 +41,13 @@ export default function PreviewCard({
           <h5>{affiliation}</h5>
           <p>{excerpt}</p>
           <div className="des">
-            <div className="des-button des-special">New Client Accepted</div>
-            <div className="des-button">Online Therapy Available</div>
+            <div className="des-button des-special">Scholarship Available</div>
+            <button className="des__bookmark" onClick={toggleBookmark}>
+              <i
+                className={`bi ${isBookmarked ? "bi-check" : "bi-bookmark"}`}
+              ></i>
+              <h4>{isBookmarked ? "Bookmarked" : "Bookmark"}</h4>
+            </button>
           </div>
         </div>
         <div className="contact-card">

@@ -33,11 +33,11 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
 ]
 
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:5173',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend'
+     ,'Home.custom_auth_backend.EmailBackend'
+     ]
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',

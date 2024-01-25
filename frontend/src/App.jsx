@@ -49,6 +49,7 @@ function App() {
                 {collegeData.map((college) => (
                   <PreviewCard
                     key={college.id}
+                    id={college.id}
                     college_name={college.college_name}
                     affiliation={college.affiliation}
                     excerpt={college.excerpt}

@@ -290,6 +290,25 @@ main {
   color: #828282;
 }
 
+.des__bookmark {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(26 29 44);
+  border-radius: 8px;
+  border: none;
+  width: 130px;
+}
+
+.des__bookmark:hover {
+  cursor: pointer;
+  background-color: black;
+}
+
+.des__bookmark i {
+  color: white;
+}
+
 .des-special {
   background-color: #e4f0fa;
   color: #2276fd;
@@ -304,6 +323,12 @@ main {
   margin: 10px 0;
   color: #828282;
   font-weight: 400;
+}
+
+.des__bookmark h4 {
+  margin: 5px;
+  color: white;
+  font-weight: normal;
 }
 
 .detail-container p {
@@ -377,4 +402,15 @@ svg {
 
 .feature-card {
   margin-bottom: 8px;
+}
+
+/* search bar */
+
+.suggestion-list {
+  margin: 0;
+  padding: 0;
+}
+
+.autocomplete {
+  width: 100%;
 }
