@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
   const [userData, setUserData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -24,7 +24,7 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
         "http://localhost:8000/login_credentials/",
 
         {
-          email: userData.email,
+          username: userData.username,
           password: userData.password,
         },
         {
@@ -76,10 +76,10 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
           <form action="#">
             <div className={`${styles.field} ${styles.inputField}`}>
               <input
-                type="email"
-                placeholder="Email"
+                type="text"
+                placeholder="username"
                 className={styles.input}
-                name="email"
+                name="username"
                 onChange={handleChange}
               />
             </div>

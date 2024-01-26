@@ -10,7 +10,9 @@ urlpatterns = [
     path('signup_credentials/', views.SignupCredentials.as_view(), name='signup'),
     path('search_colleges/' ,views.SearchView.as_view()),
     path('compare/', Compare.as_view(), name='compare'),
-    path('bookmark/', BookmarkView.as_view(), name='bookmark')
+    path('bookmark/', BookmarkView.as_view(), name='bookmark'),
+    path('get_bookmarked_items/', get_bookmarked_items, name='get_bookmarked_items'),
+    path('logout/', logout_view,  name='logout')
 ]
 
 # Configuration for serving media files during development

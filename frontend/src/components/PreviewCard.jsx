@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export default function PreviewCard({
   id,
@@ -18,11 +19,23 @@ export default function PreviewCard({
 
     // Send the item to the Django backend when bookmarked
     if (!isBookmarked) {
+      const csrfToken = Cookies.get("csrftoken");
       try {
         // Use the updated state value
-        await axios.post("http://localhost:8000/bookmark/", {
-          id,
-        });
+
+        await axios.post(
+          "http://localhost:8000/bookmark/",
+          {
+            id,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrfToken,
+            },
+          }
+        );
       } catch (error) {
         console.error("Error bookmarking:", error);
       }

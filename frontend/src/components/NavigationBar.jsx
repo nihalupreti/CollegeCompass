@@ -26,6 +26,10 @@ export default function NavigationBar({ isLogged }) {
     setIsLoggedIn(true); // Update the state to indicate that the user is logged in
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
     <header className="main-header" style={{ height: headerHeight }}>
       <section className="top-bar__section">
@@ -69,7 +73,7 @@ export default function NavigationBar({ isLogged }) {
         </nav>
         <div className="auth">
           {isLoggedIn || isLogged ? (
-            <AvatarDropdown /> // Render AvatarComponent if user is logged in
+            <AvatarDropdown onLogout={handleLogout} /> // Render AvatarComponent if user is logged in
           ) : (
             <>
               <button

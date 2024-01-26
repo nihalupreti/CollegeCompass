@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-8wn!g1x&wn24axevq6+83if1nnnmy*151re37nios2+bgx6y+1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 
 #  SameSite=None for cross-origin cookies
@@ -33,12 +34,14 @@ SESSION_COOKIE_SAMESITE = None
 CSRF_COOKIE_SAMESITE = None
 
 #  Secure=True if using HTTPS
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 # HttpOnly=True for added security
 SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
+
+CORS_ORIGIN_WHITELIST = ( 'localhost:5173', )
 
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -47,12 +50,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173", 
 ]
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", ]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend'
-     ,'Home.custom_auth_backend.EmailBackend'
-     ]
+# AUTHENTICATION_BACKENDS = [
+#     'django.contrib.auth.backends.ModelBackend'
+#      ,'Home.custom_auth_backend.EmailBackend'
+#      ]
 
 
 INSTALLED_APPS = [

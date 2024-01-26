@@ -1,11 +1,36 @@
 import { useState } from "react";
+import axios from "axios";
 import styles from "./AvatarDropdown.module.css";
+import Cookies from "js-cookie";
 
-export default function AvatarDropdown() {
+export default function AvatarDropdown({ onLogout }) {
   const [isMenuActive, setMenuActive] = useState(false);
 
   const toggleMenu = () => {
     setMenuActive((prev) => !prev);
+  };
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    // Retrieve CSRF token from cookies
+    const csrfToken = Cookies.get("csrftoken");
+    console.log("cookie", csrfToken);
+    try {
+      const response = await axios.post("http://localhost:8000/logout/", null, {
+        withCredentials: true,
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("Logout successful");
+        onLogout();
+      } else {
+        console.error("Logout failed");
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
   };
 
   return (
@@ -71,6 +96,7 @@ export default function AvatarDropdown() {
                 className={`${styles.userMenuLink}`}
                 href="#"
                 style={{ color: "#F44336" }}
+                onClick={handleLogout}
               >
                 <i
                   className="bi bi-box-arrow-in-left"

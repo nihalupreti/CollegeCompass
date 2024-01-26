@@ -7,7 +7,7 @@ class CollegeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LoginCredentialsSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    username = serializers.CharField()
     password = serializers.CharField()
 
 class SignupCredentialsSerializer(serializers.Serializer):
