@@ -6,14 +6,12 @@ import SearchBar from "./SearchBar";
 import SignUpModal from "./SignUpModal";
 import AvatarDropdown from "./AvatarDropdown";
 
-export default function NavigationBar({ isLogged }) {
+export default function NavigationBar({ isLogged, setIsLogged }) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [activePage, setActivePage] = useState("Home");
 
   const location = useLocation(); //gives route path
-  console.log(location.pathname);
 
   const temporaryStyle = {
     fontFamily: "Roboto, sans-serif",
@@ -23,11 +21,10 @@ export default function NavigationBar({ isLogged }) {
   const headerHeight = location.pathname === "/colleges" ? "320px" : "0px";
 
   const handleLoginSuccess = () => {
-    setIsLoggedIn(true); // Update the state to indicate that the user is logged in
+    setIsLogged(true);
   };
-
   const handleLogout = () => {
-    setIsLoggedIn(false);
+    setIsLogged(false);
   };
 
   return (
@@ -72,7 +69,7 @@ export default function NavigationBar({ isLogged }) {
           </ul>
         </nav>
         <div className="auth">
-          {isLoggedIn || isLogged ? (
+          {isLogged ? (
             <AvatarDropdown onLogout={handleLogout} /> // Render AvatarComponent if user is logged in
           ) : (
             <>
@@ -104,7 +101,7 @@ export default function NavigationBar({ isLogged }) {
       {location.pathname === "/colleges" ? (
         <div className="location-section">
           <div className="nav-text">
-            <p style={temporaryStyle}>Home &gt; New York &gt; New York</p>
+            <p style={temporaryStyle}>Home &gt; Colleges </p>
           </div>
           <div className="background-image"></div>
           <SearchBar />{" "}

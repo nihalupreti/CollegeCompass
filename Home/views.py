@@ -92,7 +92,7 @@ class LoginCredentials(APIView):
                 return Response({'success': True, 'message': 'Data validated sucessfully'}, status=200)
                 print("logged in ")
             else:
-                return Response({'message': 'Invalid Credentials'}, status=200)
+                return Response({'message': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
             
         else:
             print(serializer.errors)
@@ -124,12 +124,16 @@ class BookmarkView(APIView):
     def post(self, request, *args, **kwargs):
         try:
             college_id = self.request.data.get('id')
-            print(college_id)
             if college_id is not None:
                 bookmarked_items = request.session.get('bookmarked_items', [])
-                bookmarked_items.append(college_id)
-                request.session['bookmarked_items'] = bookmarked_items
-                return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'})
+                if college_id in bookmarked_items:
+                    bookmarked_items.remove(college_id)
+                    request.session['bookmarked_items'] = bookmarked_items
+                    return JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'})
+                else:
+                    bookmarked_items.append(college_id)
+                    request.session['bookmarked_items'] = bookmarked_items
+                    return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'})
             return JsonResponse({'success': False, 'message': 'Invalid request. Missing item_id.'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON format in the request body.'}, status=400)

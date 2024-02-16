@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import LoginModal from "./LoginModal";
 
 export default function PreviewCard({
   id,
@@ -11,23 +12,50 @@ export default function PreviewCard({
   phone_no,
   email,
   college_image,
+  isLogged,
+  authed,
 }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-  const toggleBookmark = async () => {
-    setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
-
-    // Send the item to the Django backend when bookmarked
-    if (!isBookmarked) {
+  useEffect(() => {
+    const getBookmarkedItems = async () => {
       const csrfToken = Cookies.get("csrftoken");
       try {
-        // Use the updated state value
+        const response = await axios.get(
+          "http://localhost:8000/get_bookmarked_items/",
+          {
+            withCredentials: true,
+            headers: {
+              "X-CSRFToken": csrfToken,
+            },
+          }
+        );
+        // Check if the current item's ID is present in the bookmarked items list
+        console.log(response.data["bookmarked_items"]);
+        const isItemBookmarked = response.data["bookmarked_items"].includes(id);
+        setIsBookmarked(isItemBookmarked);
+      } catch (error) {
+        console.error("Error fetching bookmarked items:", error);
+      }
+    };
 
+    if (isLogged) {
+      getBookmarkedItems();
+    }
+  }, [id, isLogged]);
+
+  const toggleBookmark = async () => {
+    const updatedIsBookmarked = !isBookmarked;
+    setIsBookmarked(updatedIsBookmarked);
+
+    // Send the item to the Django backend when bookmarked
+    if (!updatedIsBookmarked && isLogged) {
+      const csrfToken = Cookies.get("csrftoken");
+      try {
         await axios.post(
           "http://localhost:8000/bookmark/",
-          {
-            id,
-          },
+          { id },
           {
             withCredentials: true,
             headers: {
@@ -39,6 +67,8 @@ export default function PreviewCard({
       } catch (error) {
         console.error("Error bookmarking:", error);
       }
+    } else if (!isLogged) {
+      setIsLoginModalOpen(true);
     }
   };
 
@@ -57,10 +87,19 @@ export default function PreviewCard({
             <div className="des-button des-special">Scholarship Available</div>
             <button className="des__bookmark" onClick={toggleBookmark}>
               <i
-                className={`bi ${isBookmarked ? "bi-check" : "bi-bookmark"}`}
+                className={`bi ${
+                  isBookmarked && isLogged ? "bi-check" : "bi-bookmark"
+                }`}
               ></i>
               <h4>{isBookmarked ? "Bookmarked" : "Bookmark"}</h4>
             </button>
+            <LoginModal
+              isOpen={isLoginModalOpen}
+              onRequestClose={() => setIsLoginModalOpen(false)}
+              onLoginSuccess={() => {
+                authed(true);
+              }}
+            />
           </div>
         </div>
         <div className="contact-card">

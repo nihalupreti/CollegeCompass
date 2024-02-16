@@ -42,7 +42,12 @@ function App() {
 
   return (
     <Router>
-      <NavigationBar isLogged={authenticated} />
+      <NavigationBar
+        isLogged={authenticated}
+        setIsLogged={(bool) => {
+          setAuthenticated(bool);
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -62,6 +67,10 @@ function App() {
                     phone_no={college.phone_no}
                     email={college.email}
                     college_image={college.college_image}
+                    isLogged={authenticated}
+                    authed={(bool) => {
+                      setAuthenticated(bool);
+                    }}
                   />
                 ))}
               </div>
