@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import LoginModal from "./LoginModal";
+import InquiryModal from "./InquiryModal";
 
 export default function PreviewCard({
   id,
@@ -17,6 +18,15 @@ export default function PreviewCard({
 }) {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+
+  const openInquiryModal = () => {
+    setIsInquiryModalOpen(true);
+  };
+
+  const closeInquiryModal = () => {
+    setIsInquiryModalOpen(false);
+  };
 
   useEffect(() => {
     const getBookmarkedItems = async () => {
@@ -46,14 +56,11 @@ export default function PreviewCard({
   }, [id, isLogged]);
 
   const toggleBookmark = async () => {
-    const updatedIsBookmarked = !isBookmarked;
-    setIsBookmarked(updatedIsBookmarked);
-
     // Send the item to the Django backend when bookmarked
-    if (!updatedIsBookmarked && isLogged) {
+    if (isLogged) {
       const csrfToken = Cookies.get("csrftoken");
       try {
-        await axios.post(
+        const response = await axios.post(
           "http://localhost:8000/bookmark/",
           { id },
           {
@@ -64,10 +71,15 @@ export default function PreviewCard({
             },
           }
         );
+        if (response.status === 200) {
+          setIsBookmarked((prevIsBookmarked) => !prevIsBookmarked);
+        } else {
+          console.error("Error bookmarking. Unexpected response:", response);
+        }
       } catch (error) {
         console.error("Error bookmarking:", error);
       }
-    } else if (!isLogged) {
+    } else {
       setIsLoginModalOpen(true);
     }
   };
@@ -145,8 +157,15 @@ export default function PreviewCard({
           </div>
           <div className="more-info__buttons">
             <button>Details</button>
-            <button>Inquery</button>
+            <button onClick={openInquiryModal}>Inquiry</button>
           </div>
+
+          {isInquiryModalOpen && (
+            <InquiryModal
+              isOpen={isInquiryModalOpen}
+              onRequestClose={closeInquiryModal}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -377,6 +377,10 @@ svg {
   font-weight: 500;
 }
 
+.more-info__buttons button:hover {
+  cursor: pointer;
+}
+
 .more-info__buttons button:first-child {
   margin-top: 20px;
   margin-bottom: 10px;

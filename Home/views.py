@@ -129,11 +129,11 @@ class BookmarkView(APIView):
                 if college_id in bookmarked_items:
                     bookmarked_items.remove(college_id)
                     request.session['bookmarked_items'] = bookmarked_items
-                    return JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'})
+                    return JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'},status=200)
                 else:
                     bookmarked_items.append(college_id)
                     request.session['bookmarked_items'] = bookmarked_items
-                    return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'})
+                    return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'}, status=200)
             return JsonResponse({'success': False, 'message': 'Invalid request. Missing item_id.'}, status=400)
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'message': 'Invalid JSON format in the request body.'}, status=400)
