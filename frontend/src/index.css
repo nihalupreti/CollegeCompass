@@ -156,6 +156,8 @@ a {
 .search-input,
 .search-input::placeholder {
   font-size: medium;
+  padding-left: 10px;
+  border-radius: 8px;
 }
 
 .search-wrapper {
@@ -174,6 +176,13 @@ a {
 }
 
 .search {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.search-field {
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
@@ -236,6 +245,18 @@ main {
 
 .filter-group {
   margin-bottom: 15px;
+}
+
+.mapButton {
+  background-color: #2276fd;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.mapButton:hover {
+  cursor: pointer;
 }
 
 .filter-group label {
@@ -413,6 +434,14 @@ svg {
 .suggestion-list {
   margin: 0;
   padding: 0;
+}
+
+.suggestion-list li {
+  list-style: none;
+  font-size: medium;
+  font-weight: normal;
+  margin: 10px;
+  color: black;
 }
 
 .autocomplete {
