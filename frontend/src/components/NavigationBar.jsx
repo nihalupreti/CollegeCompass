@@ -104,7 +104,7 @@ export default function NavigationBar({ isLogged, setIsLogged }) {
             <p style={temporaryStyle}>Home &gt; Colleges </p>
           </div>
           <div className="background-image"></div>
-          <SearchBar />{" "}
+          <SearchBar useHandleSelectSuggestion={true} />{" "}
         </div>
       ) : (
         ""

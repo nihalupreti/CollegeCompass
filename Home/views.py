@@ -23,14 +23,16 @@ class Base(View):
 
 @api_view(['GET'])
 def collegeData(request):
+    # Accessing parameters from the query string
+    params = request.query_params
+    print("Parameters received:", params)
+
     college_data = models.College.objects.all()
     data_serializer = CollegeSerializer(college_data, many=True)
     if request.user.is_authenticated:
         return Response(data_serializer.data, status=status.HTTP_200_OK)
     else:
          return Response(data_serializer.data, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
-
-
 
 class Compare(Base):
     def get(self, request):
@@ -117,7 +119,9 @@ class SearchView(APIView):
         query = request.query_params.get('q', '')
         results = models.College.objects.filter(college_name__istartswith=query)[:10]
         serializer = CollegeSearchSerializer(results, many=True)
+        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 @method_decorator(login_required, name='post')
 class BookmarkView(APIView):

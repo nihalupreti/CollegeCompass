@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function SearchBar() {
+export default function SearchBar({ useHandleSelectSuggestion, onSelect }) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -13,12 +13,12 @@ export default function SearchBar() {
         );
         console.log("data", response.data);
         const formattedSuggestions = response.data.map((suggestion) => ({
-          id: suggestion.id,
+          ...suggestion,
           college_name:
             suggestion.college_name.charAt(0).toUpperCase() +
             suggestion.college_name.slice(1).toLowerCase(),
-          address: suggestion.address, // Assuming you want to keep the address as is
         }));
+
         setSuggestions(formattedSuggestions);
       } catch (error) {
         console.error("Error fetching suggestions:", error);
@@ -33,10 +33,15 @@ export default function SearchBar() {
   }, [query]);
 
   const handleSelectSuggestion = (selectedSuggestion) => {
-    const url = `http://localhost:8000/college/${selectedSuggestion.id}/`;
-    window.open(url, "_blank");
-    setSuggestions([]);
-    // perform actions when a suggestion is selected.
+    if (useHandleSelectSuggestion) {
+      const url = `http://localhost:8000/college/${selectedSuggestion.id}/`;
+      window.open(url, "_blank");
+      setSuggestions([]);
+      // perform actions when a suggestion is selected.
+    } else {
+      console.log(selectedSuggestion);
+      onSelect(selectedSuggestion);
+    }
   };
 
   return (

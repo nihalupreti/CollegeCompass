@@ -4,13 +4,6 @@
   align-items: center;
 }
 
-.total-container input {
-  width: 30%;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid grey;
-}
-
 .compare-row {
   margin-top: 50px;
 }
@@ -31,10 +24,12 @@
   align-items: center;
 }
 
-.item1 {
+.item {
   width: 300px;
   border: 1px solid black;
   border-radius: 8px;
+  margin: 10px;
+  height: 530px;
 }
 
 .photo img {
@@ -49,6 +44,38 @@
   flex-direction: column;
 }
 
+.info-buttons button {
+  margin: 5px 0;
+  border-radius: 6px;
+  border: none;
+  background-color: #2276fd;
+  color: white;
+  padding: 10px 0;
+}
+
+.info-buttons button:hover {
+  cursor: pointer;
+}
+
 .secondary-detail div {
-  margin: 10px;
+  margin: 8px 0;
+}
+
+.information {
+  margin: 15px;
+}
+
+.compare {
+  display: flex;
+}
+
+.empty-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-icon i:hover {
+  cursor: pointer;
+  color: grey;
 }

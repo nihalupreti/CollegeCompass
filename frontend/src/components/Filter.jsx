@@ -1,16 +1,22 @@
 import { useState } from "react";
-import MapModal from "./MapModal"; // Assuming you have a MapModal component
+import MapModal from "./MapModal";
 
-export default function Filter() {
+export default function Filter({ onFilterChange }) {
   const [sliderValue, setSliderValue] = useState(1000000);
   const [formattedSliderValue, setFormattedSliderValue] = useState("599,999");
-  const [isMapModalOpen, setIsMapModalOpen] = useState(false); // State to track if the map modal is open
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
 
   const handleSliderChange = (event) => {
     const value = parseInt(event.target.value);
-    const formattedValue = value.toLocaleString(); // Format number with commas
+    const formattedValue = value.toLocaleString();
     setSliderValue(value);
-    setFormattedSliderValue(formattedValue); // Update the formatted value state
+    setFormattedSliderValue(formattedValue);
+    onFilterChange({ sliderValue: value }); // Notify parent component about slider value change
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    onFilterChange({ [name]: checked }); // Notify parent component about checkbox change
   };
 
   const openMapModal = () => {
@@ -54,19 +60,36 @@ export default function Filter() {
       <div className="filter-group">
         <div className="filter-group-header">Type</div>
         <label>
-          <input type="checkbox" name="field" value="Engineering" />
+          <input
+            type="checkbox"
+            name="engineering"
+            onChange={handleCheckboxChange}
+          />
           Engineering
         </label>
         <label>
-          <input type="checkbox" name="field" value="Commerce" />
+          <input
+            type="checkbox"
+            name="commerce"
+            onChange={handleCheckboxChange}
+          />
           Commerce
         </label>
         <label>
-          <input type="checkbox" name="field" value="Medical" />
+          <input
+            type="checkbox"
+            name="medical"
+            onChange={handleCheckboxChange}
+          />
           Medical
         </label>
         <label>
-          <input type="checkbox" name="field" value="All" checked />
+          <input
+            type="checkbox"
+            name="all"
+            defaultChecked
+            onChange={handleCheckboxChange}
+          />
           All
         </label>
       </div>
