@@ -390,7 +390,8 @@ svg {
   flex-direction: column;
 }
 
-.more-info__buttons button {
+.more-info__buttons button,
+.linkStyle button {
   margin: 0 12px;
   border: 1.5px rgb(168, 168, 168) solid;
   border-radius: 8px;
@@ -402,7 +403,8 @@ svg {
   cursor: pointer;
 }
 
-.more-info__buttons button:first-child {
+.more-info__buttons button:first-child,
+.linkStyle button {
   margin-top: 20px;
   margin-bottom: 10px;
   background-color: #ffffff;
@@ -446,4 +448,10 @@ svg {
 
 .autocomplete {
   width: 100%;
+  margin: 2px 0;
+}
+
+.autocomplete:hover {
+  cursor: pointer;
+  background-color: #e5e4e2;
 }

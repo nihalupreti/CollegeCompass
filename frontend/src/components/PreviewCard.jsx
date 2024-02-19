@@ -24,6 +24,11 @@ export default function PreviewCard({
     setIsInquiryModalOpen(true);
   };
 
+  const handleDetailsClick = () => {
+    const url = `http://localhost:8000/college/${id}/`;
+    window.open(url, "_blank");
+  };
+
   const closeInquiryModal = () => {
     setIsInquiryModalOpen(false);
   };
@@ -156,8 +161,11 @@ export default function PreviewCard({
             <h5 className="contact-card__detail">{email}</h5>
           </div>
           <div className="more-info__buttons">
-            <button>Details</button>
-            <button onClick={openInquiryModal}>Inquiry</button>
+            <button onClick={handleDetailsClick}>Details</button>
+
+            <button className="infoButtons" onClick={openInquiryModal}>
+              Inquiry
+            </button>
           </div>
 
           {isInquiryModalOpen && (

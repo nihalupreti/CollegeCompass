@@ -3,8 +3,10 @@ from django.conf.urls.static import static
 from django.urls import path
 from . import views
 from .views import *
+from .renderingviews import page_detail
 
 urlpatterns = [
+    path('college/<int:college_id>/', page_detail, name='college_detail_page'),
     path('college/', views.collegeData),
     path('login_credentials/', views.LoginCredentials.as_view(), name='login'),
     path('signup_credentials/', views.SignupCredentials.as_view(), name='signup'),

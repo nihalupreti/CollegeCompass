@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { useEffect, useState } from "react";
 import PreviewCard from "./components/PreviewCard";
 import NavigationBar from "./components/NavigationBar";
 import Filter from "./components/Filter";
@@ -11,20 +11,6 @@ import Compare from "./components/compare";
 function App() {
   const [collegeData, setCollegeData] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const header = document.querySelector(".top-bar__section");
-      if (window.scrollY > 0) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     axios
@@ -71,13 +57,14 @@ function App() {
                     authed={(bool) => {
                       setAuthenticated(bool);
                     }}
+                    detailsPath={`/colleges/${college.id}`}
                   />
                 ))}
               </div>
             </main>
           }
         />
-        <Route path="/compare" element={<Compare />} />
+        <Route path="/compare" element={<Compare />} />{" "}
       </Routes>
     </Router>
   );

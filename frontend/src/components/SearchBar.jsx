@@ -33,8 +33,10 @@ export default function SearchBar() {
   }, [query]);
 
   const handleSelectSuggestion = (selectedSuggestion) => {
-    setQuery(selectedSuggestion.name);
-    // perform additional actions when a suggestion is selected.
+    const url = `http://localhost:8000/college/${selectedSuggestion.id}/`;
+    window.open(url, "_blank");
+    setSuggestions([]);
+    // perform actions when a suggestion is selected.
   };
 
   return (

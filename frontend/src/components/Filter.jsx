@@ -1,15 +1,24 @@
 import { useState } from "react";
+import MapModal from "./MapModal"; // Assuming you have a MapModal component
 
 export default function Filter() {
   const [sliderValue, setSliderValue] = useState(1000000);
   const [formattedSliderValue, setFormattedSliderValue] = useState("599,999");
-  // Initial slider value
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false); // State to track if the map modal is open
 
   const handleSliderChange = (event) => {
     const value = parseInt(event.target.value);
     const formattedValue = value.toLocaleString(); // Format number with commas
     setSliderValue(value);
     setFormattedSliderValue(formattedValue); // Update the formatted value state
+  };
+
+  const openMapModal = () => {
+    setIsMapModalOpen(true);
+  };
+
+  const closeMapModal = () => {
+    setIsMapModalOpen(false);
   };
 
   return (
@@ -65,7 +74,10 @@ export default function Filter() {
       <div className="filter-group">
         <div className="filter-group-header">By Location</div>
       </div>
-      <button className="mapButton">Open Map</button>
+      <button className="mapButton" onClick={openMapModal}>
+        Open Map
+      </button>
+      <MapModal isOpen={isMapModalOpen} onRequestClose={closeMapModal} />
     </div>
   );
 }

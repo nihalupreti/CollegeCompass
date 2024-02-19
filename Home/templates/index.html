@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ college.college_name }}</title>
+    <!-- Use the college name as the page title -->
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="image">
+        <!-- Assuming college_image is the field storing the image -->
+        <img
+          src="{{ college.college_image.url }}"
+          alt="{{ college.college_name }}"
+        />
+      </div>
+      <div class="details">
+        <header>
+          <h1>{{ college.college_name }}</h1>
+          <!-- Display the college name -->
+          <h3>{{ college.affiliation }}</h3>
+          <!-- Display the college affiliation -->
+        </header>
+
+        <div class="other_infos">
+          <div class="location">{{ college.address }}</div>
+          <!-- Display the college address -->
+          <div class="website">{{ college.website }}</div>
+          <!-- Display the college website -->
+        </div>
+        <div class="cost_info">Rs {{ college.fee }}</div>
+        <!-- Display the college fee -->
+      </div>
+    </div>
+    <table class="program-table">
+      <tr>
+        <th>Program Name</th>
+        <th>Courses</th>
+      </tr>
+      {% for program in programs %}
+      <tr>
+        <!-- Display program name -->
+        <td>{{ program.program_name }}</td>
+        <td>
+          <!-- Display courses for the program -->
+          <ul>
+            {% for subject in subjects %} {% if subject.program == program %}
+            <li>{{ subject.subject_name }}</li>
+            {% endif %} {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
