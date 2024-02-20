@@ -87,19 +87,19 @@ class LoginCredentials(APIView):
         if serializer.is_valid():
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
-            user = authenticate(request, username=username,
-                                password=password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return Response({'success': True, 'message': 'Data validated sucessfully'}, status=200)
-                print("logged in ")
+                if user.is_superuser:  # Check if the user is an admin
+                    return Response({'success': True, 'message': 'Admin logged in successfully'}, status=status.HTTP_202_ACCEPTED)
+                else:
+                    return Response({'success': True, 'message': 'User logged in successfully'}, status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-            
         else:
             print(serializer.errors)
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
-
+            
 class SignupCredentials(APIView):
     def post(self, request, *args, **kwargs):
         serializer = SignupCredentialsSerializer(data=request.data)

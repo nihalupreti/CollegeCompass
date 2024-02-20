@@ -22,7 +22,6 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
     try {
       const response = await axios.post(
         "http://localhost:8000/login_credentials/",
-
         {
           username: userData.username,
           password: userData.password,
@@ -38,11 +37,14 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
         // Call the callback function to notify the parent component about the successful login
         onLoginSuccess();
         onRequestClose(); // Close the modal
+      } else if (response.status === 202) {
+        // Open a new window with localhost:8000/admin
+        window.open("http://localhost:8000/admin", "_blank");
+        onRequestClose(); // Close the modal
       } else {
-        // Handle unsuccessful login
+        // Handle other unsuccessful login scenarios
         console.error("Login failed");
       }
-
       console.log("Response:", response.data);
     } catch (error) {
       console.error("Error:", error);
