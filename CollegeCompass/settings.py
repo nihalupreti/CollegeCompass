@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,8 +26,6 @@ SECRET_KEY = 'django-insecure-8wn!g1x&wn24axevq6+83if1nnnmy*151re37nios2+bgx6y+1
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
 
 #  SameSite=None for cross-origin cookies
 SESSION_COOKIE_SAMESITE = None
@@ -41,17 +39,13 @@ CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False
 
-CORS_ORIGIN_WHITELIST = ( 'localhost:5173', )
-
-
+CORS_ORIGIN_WHITELIST = ('localhost:5173',)
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173", 
+    "http://localhost:5173",
 ]
-
-
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
@@ -62,7 +56,9 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    'material',
+    'material.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -72,6 +68,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'Home'
 ]
+MATERIAL_ADMIN_SITE = {
+    'HEADER': _('Admin Panel'),  # Admin site header
+    'TITLE': _('CollegeCompass'),  # Admin site title
+    'MAIN_BG_COLOR': 'green',  # Admin site main color, css color should be specified
+    'MAIN_HOVER_COLOR': 'black',  # Admin site main hover color, css color should be specified
+    'SHOW_THEMES': True,  # Show default admin themes button
+    'SHOW_COUNTS': True,  # Show instances counts for each model
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -104,7 +108,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CollegeCompass.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -114,7 +117,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -134,7 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -145,7 +146,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

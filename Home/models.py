@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class College(models.Model):
     college_name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
@@ -8,7 +9,7 @@ class College(models.Model):
     email = models.EmailField()
     affiliation = models.CharField(max_length=30)
     excerpt = models.TextField()
-    college_website = models.CharField(max_length=50)
+    college_website = models.CharField(max_length=50, null=True, blank=True)
     college_image = models.ImageField(upload_to="images/", null=True, blank=True)
 
     def __str__(self):

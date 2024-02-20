@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import styles from "./AvatarDropdown.module.css";
+import styles from "./avatardropdown.module.css";
 import Cookies from "js-cookie";
 
 export default function AvatarDropdown({ onLogout }) {
