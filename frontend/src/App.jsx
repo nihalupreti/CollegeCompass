@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import BookmarkPage from "./components/BookmarkPage";
+import Cookies from "js-cookie";
 import PreviewCard from "./components/PreviewCard";
 import NavigationBar from "./components/NavigationBar";
 import Filter from "./components/Filter";
@@ -18,6 +19,20 @@ function App() {
     medical: false,
     all: true,
   });
+  const [bookmarkedItems, setBookmarkedItems] = useState([]);
+
+  useEffect(() => {
+    // Fetch bookmarked items from the cookie and set the state
+    const getBookmarkedItemsFromCookie = () => {
+      const bookmarkedItemsString = Cookies.get("bookmarked_items");
+      if (bookmarkedItemsString) {
+        const parsedItems = JSON.parse(bookmarkedItemsString);
+        setBookmarkedItems(parsedItems);
+      }
+    };
+
+    getBookmarkedItemsFromCookie();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,6 +68,10 @@ function App() {
       ...newFilterValues,
     }));
   };
+
+  const bookmarkedColleges = collegeData.filter((college) =>
+    bookmarkedItems.includes(college.id)
+  );
 
   return (
     <Router>
@@ -103,6 +122,10 @@ function App() {
           }
         />
         <Route path="/compare" element={<Compare />} />
+        <Route
+          path="/bookmarks"
+          element={<BookmarkPage bookmarkedColleges={bookmarkedColleges} />}
+        />
       </Routes>
     </Router>
   );

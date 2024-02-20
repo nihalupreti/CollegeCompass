@@ -62,8 +62,8 @@ export default function NavigationBar({ isLogged, setIsLogged }) {
             <li
               className={`nav-item ${activePage === "About" ? "active" : ""}`}
             >
-              <Link to="/about" onClick={() => setActivePage("About")}>
-                About
+              <Link to="/bookmarks" onClick={() => setActivePage("Bookmarks")}>
+                Bookmarks
               </Link>
             </li>
           </ul>
