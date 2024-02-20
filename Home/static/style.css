@@ -1,31 +1,48 @@
 body {
   display: flex;
+  background-color: #F5F7FB;
   align-items: center;
   flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
+  margin-top: 20px;
   display: flex;
+  background-color: white;
+  border: 2px hidden ;
+  border-radius: 15px ;
 }
 
 .details {
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
 }
+
+
 
 .other_infos {
   display: flex;
 }
 
-.image {
+.cost_info{
+  color:#2276FD;
+  font-weight: bold;
+}
+
+.image  {
+  margin: 10px;
   height: 400px;
   width: 500px;
-  border: 2px black solid;
+ 
   margin-right: 50px;
 }
 
 .image img {
   width: 100%;
+  border:2px hidden;
+  border-radius: 15px;
 }
 
 table {
@@ -36,15 +53,19 @@ table {
 
 th,
 td {
-  border: 1px solid black;
+  border: 1px hidden #dfe1e8 ;
   padding: 8px;
   text-align: left;
 }
 
 th {
-  background-color: #f2f2f2;
+  background-color: white;
+  margin: 4px;
+  border-radius: 5px;
 }
 
 .program-table {
   width: 80%; /* Adjust as needed */
+  /* border: 2px hidden;
+  border-radius: 15px; */
 }
