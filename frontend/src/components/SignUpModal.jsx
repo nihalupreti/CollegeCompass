@@ -9,6 +9,7 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
     password: "",
     confirmPassword: "",
     userName: "",
+    role: "",
   });
 
   const handleChange = (event) => {
@@ -30,6 +31,7 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
           password: userData.password,
           confirm_password: userData.confirmPassword,
           user_name: userData.userName,
+          role: userData.role,
         },
         {
           headers: {
@@ -56,7 +58,7 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
         content: {
           height: "auto",
           width: "auto",
-          top: "50%",
+          top: "40%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           padding: 0,
@@ -108,6 +110,18 @@ export default function SignUpModal({ isOpen, onRequestClose }) {
                 onChange={handleChange}
               />
               <i className={`bx bx-hide ${styles.eyeIcon}`}></i>
+            </div>
+
+            <div className={`${styles.field} ${styles.inputField}`}>
+              <select
+                className={styles.input}
+                name="role"
+                onChange={handleChange}
+              >
+                <option value="">Select Role</option>
+                <option value="student">Student</option>
+                <option value="college_admin">College Admin</option>
+              </select>
             </div>
 
             <div className={`${styles.field} ${styles.buttonField}`}>

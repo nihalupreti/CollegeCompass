@@ -34,17 +34,14 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
         }
       );
       if (response.status === 200) {
-        // Call the callback function to notify the parent component about the successful login
         onLoginSuccess();
-        onRequestClose(); // Close the modal
+        onRequestClose();
       } else if (response.status === 202) {
-        // Open a new window with localhost:8000/admin after a slight delay
         setTimeout(() => {
           window.open("http://localhost:8000/admin", "_blank");
-        }, 100); // Adjust the delay time as needed
-        onRequestClose(); // Close the modal
+        }, 0);
+        onRequestClose();
       } else {
-        // Handle other unsuccessful login scenarios
         console.error("Login failed");
       }
       console.log("Response:", response.data);
@@ -59,7 +56,7 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
       onRequestClose={onRequestClose}
       style={{
         overlay: {
-          backgroundColor: "rgb(0 0 0 / 79%)", // Set the background color for the overlay
+          backgroundColor: "rgb(0 0 0 / 79%)",
         },
         content: {
           height: "auto",

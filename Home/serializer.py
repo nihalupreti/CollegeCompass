@@ -15,6 +15,7 @@ class SignupCredentialsSerializer(serializers.Serializer):
     password = serializers.CharField()
     confirm_password = serializers.CharField(write_only=True)
     user_name = serializers.CharField(required=True)
+    role = serializers.CharField(required=True)
 
     def validate(self, data):
         password = data.get('password')

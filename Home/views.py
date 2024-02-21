@@ -92,7 +92,7 @@ class LoginCredentials(APIView):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                if user.is_superuser:  # Check if the user is an admin
+                if user.is_staff:  # Check if the user is an admin
                     return Response({'success': True, 'message': 'Admin logged in successfully'},
                                     status=status.HTTP_202_ACCEPTED)
                 else:
@@ -111,7 +111,10 @@ class SignupCredentials(APIView):
             email = serializer.validated_data['email']
             password = serializer.validated_data['confirm_password']
             user_name = serializer.validated_data['user_name']
+            role = serializer.validated_data['role']
             register_user = User.objects.create_user(username=user_name, email=email, password=password)
+            if role == 'College Admin':
+                register_user.is_staff = True
             register_user.save()
             return Response({'success': True, 'message': 'Data saved successfully'}, status=200)
         else:
