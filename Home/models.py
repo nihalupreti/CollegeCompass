@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+from django.contrib.auth.models import User
 
 
 class College(models.Model):
@@ -28,3 +31,8 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subject_name
+
+
+class Staff(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)

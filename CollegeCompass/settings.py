@@ -58,7 +58,7 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
 INSTALLED_APPS = [
     'material',
     'material.admin',
-    # 'django.contrib.admin',
+     #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
