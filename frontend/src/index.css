@@ -219,7 +219,7 @@ main {
 /* filter section */
 
 .filter-section {
-  width: 35%;
+  width: 185rem;
   margin-right: 10px;
   border-radius: 8px;
   padding: 10px;
@@ -296,6 +296,7 @@ main {
   background-color: white;
   align-items: center;
   border-radius: 12px;
+  width: 95rem;
 }
 
 .des {
@@ -337,7 +338,7 @@ main {
 }
 
 .detail-container h3 {
-  margin: 0;
+  margin: 15px 0;
 }
 
 .detail-container h5 {
@@ -352,8 +353,13 @@ main {
   font-weight: normal;
 }
 
+.textp {
+  width: 1000px;
+}
 .detail-container p {
   color: #828282;
+  width: 95%;
+  text-align: justify;
 }
 
 .contact-card {

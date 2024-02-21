@@ -99,7 +99,9 @@ export default function PreviewCard({
         <div className="detail-container">
           <h3>{college_name}</h3>
           <h5>{affiliation}</h5>
-          <p>{excerpt}</p>
+          <div className="textp">
+            <p>{excerpt}</p>
+          </div>
           <div className="des">
             <div className="des-button des-special">Scholarship Available</div>
             <button className="des__bookmark" onClick={toggleBookmark}>
