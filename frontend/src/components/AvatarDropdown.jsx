@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import styles from "./avatardropdown.module.css";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 export default function AvatarDropdown({ onLogout }) {
   const [isMenuActive, setMenuActive] = useState(false);
@@ -73,13 +74,13 @@ export default function AvatarDropdown({ onLogout }) {
             </a>
           </li>
           <li className={`${styles.userMenuLink}`}>
-            <a className={`${styles.userMenuLink}`} href="#">
+            <Link to="/bookmarks" className={styles.userMenuLink}>
               <i
                 className="bi bi-bookmark-check"
                 style={{ fontSize: "20px", width: "20px", height: "20px" }}
               ></i>
               <div>Bookmarks</div>
-            </a>
+            </Link>
           </li>
           <div className={`${styles.footer}`}>
             <li className={`${styles.userMenuLink}`}>

@@ -15,6 +15,7 @@ from django.views.generic import View
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 
 
 class Base(View):
@@ -103,7 +104,6 @@ class LoginCredentials(APIView):
             print(serializer.errors)
             return Response({'success': False, 'message': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
 
-
 class SignupCredentials(APIView):
     def post(self, request, *args, **kwargs):
         serializer = SignupCredentialsSerializer(data=request.data)
@@ -129,28 +129,30 @@ class SearchView(APIView):
 
 
 @method_decorator(login_required, name='post')
-class BookmarkView(APIView):
+class BookmarkView(View):
     def post(self, request, *args, **kwargs):
         try:
-            college_id = self.request.data.get('id')
-            if college_id is not None:
-                bookmarked_items = request.session.get('bookmarked_items', [])
+            college_id = self.request.POST.get('id')
+            if college_id:
+                bookmarked_items = request.COOKIES.get('bookmarked_items', '').split(',')
                 if college_id in bookmarked_items:
                     bookmarked_items.remove(college_id)
-                    request.session['bookmarked_items'] = bookmarked_items
-                    return JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'}, status=200)
+                    response = JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'}, status=200)
                 else:
                     bookmarked_items.append(college_id)
-                    request.session['bookmarked_items'] = bookmarked_items
-                    return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'}, status=200)
+                    response = JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'}, status=200)
+
+                # Set the bookmarked_items cookie with a 30-day expiration
+                response.set_cookie('bookmarked_items', ','.join(bookmarked_items), expires=timezone.now() + timezone.timedelta(days=30))
+                return response
             return JsonResponse({'success': False, 'message': 'Invalid request. Missing item_id.'}, status=400)
-        except json.JSONDecodeError:
-            return JsonResponse({'success': False, 'message': 'Invalid JSON format in the request body.'}, status=400)
+        except ValueError:
+            return JsonResponse({'success': False, 'message': 'Invalid request.'}, status=400)
 
 
 def get_bookmarked_items(request):
     if request.user.is_authenticated:
-        bookmarked_items = request.session.get('bookmarked_items', [])
+        bookmarked_items = request.COOKIES.get('bookmarked_items', '').split(',')
         return JsonResponse({'success': True, 'bookmarked_items': bookmarked_items})
     else:
         return JsonResponse({'success': False, 'message': 'User is not authenticated'}, status=401)
