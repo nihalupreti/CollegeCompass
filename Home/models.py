@@ -4,6 +4,13 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 
+
+class Faculty(models.Model):
+    faculty_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.faculty_name
+
 class College(models.Model):
     college_name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
@@ -14,9 +21,12 @@ class College(models.Model):
     excerpt = models.TextField()
     college_website = models.CharField(max_length=50, null=True, blank=True)
     college_image = models.ImageField(upload_to="images/", null=True, blank=True)
+    faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.college_name
+
+
 
 class Program(models.Model):
     program_name = models.CharField(max_length=100)
@@ -38,8 +48,8 @@ class Staff(models.Model):
     college = models.ForeignKey(College, on_delete=models.CASCADE)
 
 
-class Inquery(models.Model):
-    subject = models.CharField(max_length=100)
-    message = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    toCollege = models.ForeignKey(College, on_delete=models.CASCADE)
+# class Inquery(models.Model):
+#     subject = models.CharField(max_length=100)
+#     message = models.TextField()
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     toCollege = models.ForeignKey(College, on_delete=models.CASCADE)

@@ -13,13 +13,14 @@ function App() {
   const [collegeData, setCollegeData] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
   const [filterValues, setFilterValues] = useState({
-    sliderValue: 1000000,
+    sliderValue: 3000000,
     engineering: false,
     commerce: false,
     medical: false,
     all: true,
   });
   const [bookmarkedItems, setBookmarkedItems] = useState([]);
+  const [filteredColleges, setFilteredColleges] = useState([]);
 
   useEffect(() => {
     const getBookmarkedItems = async () => {
@@ -68,9 +69,36 @@ function App() {
           setAuthenticated(true);
         }
         setCollegeData(response.data);
+        applyFilter(response.data); // Apply filter initially
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  // Function to apply filter and update state
+  const applyFilter = (data) => {
+    const filtered = data.filter((college) => {
+      // Check if college price is within the range
+      if (college.fee <= filterValues.sliderValue) {
+        console.log(filterValues);
+        console.log("faculty is", college.faculty);
+        if (
+          filterValues.all ||
+          (filterValues.engineering && college.faculty === 1) ||
+          (filterValues.commerce && college.faculty === 3) ||
+          (filterValues.medical && college.faculty === 2)
+        ) {
+          return true; // Include the college in the filtered list
+        }
+      }
+      return false; // Exclude the college from the filtered list
+    });
+    setFilteredColleges(filtered);
+  };
+
+  // Update filtered colleges when filter values change
+  useEffect(() => {
+    applyFilter(collegeData);
+  }, [filterValues, collegeData]);
 
   const handleFilterChange = (newFilterValues) => {
     setFilterValues((prevFilterValues) => ({
@@ -79,7 +107,7 @@ function App() {
     }));
   };
 
-  const bookmarkedColleges = collegeData.filter((college) =>
+  const bookmarkedColleges = filteredColleges.filter((college) =>
     bookmarkedItems.includes(college.id)
   );
 
@@ -102,31 +130,24 @@ function App() {
                 onFilterChange={handleFilterChange}
               />
               <div className="all-cards">
-                {collegeData
-                  .filter((college) => {
-                    // Apply filtering based on filterValues here
-                    // Example:
-                    // return college.price <= filterValues.sliderValue && ...
-                    return true; // Temporary placeholder
-                  })
-                  .map((college) => (
-                    <PreviewCard
-                      key={college.id}
-                      id={college.id}
-                      college_name={college.college_name}
-                      affiliation={college.affiliation}
-                      excerpt={college.excerpt}
-                      address={college.address}
-                      phone_no={college.phone_no}
-                      email={college.email}
-                      college_image={college.college_image}
-                      isLogged={authenticated}
-                      authed={(bool) => {
-                        setAuthenticated(bool);
-                      }}
-                      detailsPath={`/colleges/${college.id}`}
-                    />
-                  ))}
+                {filteredColleges.map((college) => (
+                  <PreviewCard
+                    key={college.id}
+                    id={college.id}
+                    college_name={college.college_name}
+                    affiliation={college.affiliation}
+                    excerpt={college.excerpt}
+                    address={college.address}
+                    phone_no={college.phone_no}
+                    email={college.email}
+                    college_image={college.college_image}
+                    isLogged={authenticated}
+                    authed={(bool) => {
+                      setAuthenticated(bool);
+                    }}
+                    detailsPath={`/colleges/${college.id}`}
+                  />
+                ))}
               </div>
             </main>
           }

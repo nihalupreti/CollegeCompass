@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import College, Staff
+from .models import College, Staff, Faculty
 
 class CollegeAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
@@ -37,3 +37,4 @@ class CollegeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(College, CollegeAdmin)
+admin.site.register(Faculty)
