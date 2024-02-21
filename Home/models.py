@@ -36,3 +36,10 @@ class Subject(models.Model):
 class Staff(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     college = models.ForeignKey(College, on_delete=models.CASCADE)
+
+
+class Inquery(models.Model):
+    subject = models.CharField(max_length=100)
+    message = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    toCollege = models.ForeignKey(College, on_delete=models.CASCADE)

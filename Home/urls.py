@@ -14,8 +14,10 @@ urlpatterns = [
     path('compare/', Compare.as_view(), name='compare'),
     path('bookmark/', BookmarkView.as_view(), name='bookmark'),
     path('get_bookmarked_items/', get_bookmarked_items, name='get_bookmarked_items'),
-    path('logout/', logout_view,  name='logout')
-]
+    path('logout/', logout_view,  name='logout'),
+    path('username/', get_username),
+    path('inquery/', create_inquiry)
+    ]
 
 # Configuration for serving media files during development
 if settings.DEBUG:

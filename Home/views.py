@@ -93,10 +93,10 @@ class LoginCredentials(APIView):
             if user is not None:
                 login(request, user)
                 if user.is_staff:  # Check if the user is an admin
-                    return Response({'success': True, 'message': 'Admin logged in successfully'},
+                    return Response({'success': True, 'message': 'Admin logged in successfully', 'username': username},
                                     status=status.HTTP_202_ACCEPTED)
                 else:
-                    return Response({'success': True, 'message': 'User logged in successfully'},
+                    return Response({'success': True, 'message': 'User logged in successfully', 'username': username},
                                     status=status.HTTP_200_OK)
             else:
                 return Response({'message': 'Invalid Credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -177,3 +177,30 @@ def logout_view(request):
         print(f"Error during logout: {e}")
         return JsonResponse({'success': False, 'message': 'Error during logout'},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+def get_username(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'username': request.user.username})
+    else:
+        return JsonResponse({'error': 'User is not authenticated'}, status=401)
+
+@api_view(['POST'])
+def create_inquiry(request):
+    if request.method == 'POST':
+        subject = request.data.get('subject')
+        message = request.data.get('message')
+        college_id = request.data.get('collegeId')
+        user = request.user
+        print("Received Inquiry:")
+        print("Subject:", subject)
+        print("Message:", message)
+        print("User:", user.username if user else None)
+        
+        inquiry = models.Inquery.objects.create(
+            subject=subject,
+            message=message,
+            user=user
+        )
+        return Response({'success': True, 'message': 'Inquiry created successfully'})
+    else:
+        return Response({'error': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)

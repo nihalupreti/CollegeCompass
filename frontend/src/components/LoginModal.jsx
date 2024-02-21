@@ -37,9 +37,10 @@ export default function LoginModal({ isOpen, onRequestClose, onLoginSuccess }) {
         onLoginSuccess();
         onRequestClose();
       } else if (response.status === 202) {
+        // Open a new window with localhost:8000/admin after a slight delay
         setTimeout(() => {
           window.open("http://localhost:8000/admin", "_blank");
-        }, 0);
+        }, 0); // Adjust the delay time as needed
         onRequestClose();
       } else {
         console.error("Login failed");

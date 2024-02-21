@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./avatardropdown.module.css";
 import Cookies from "js-cookie";
@@ -6,15 +6,34 @@ import { Link } from "react-router-dom";
 
 export default function AvatarDropdown({ onLogout }) {
   const [isMenuActive, setMenuActive] = useState(false);
+  const [userName, setUserName] = useState(null);
 
   const toggleMenu = () => {
     setMenuActive((prev) => !prev);
   };
+
+  const fetchUserName = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/username", {
+        withCredentials: true,
+      });
+      if (response.status === 200) {
+        setUserName(response.data.username);
+      } else {
+        console.error("Failed to fetch user name");
+      }
+    } catch (error) {
+      console.error("Error fetching user name:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserName();
+  }, []);
+
   const handleLogout = async (event) => {
     event.preventDefault();
-    // Retrieve CSRF token from cookies
     const csrfToken = Cookies.get("csrftoken");
-    console.log("cookie", csrfToken);
     try {
       const response = await axios.post("http://localhost:8000/logout/", null, {
         withCredentials: true,
@@ -60,7 +79,7 @@ export default function AvatarDropdown({ onLogout }) {
               height="36"
             />
             <div className={`${styles.details}`}>
-              <div id={styles.profileName}>Nihal Upreti</div>
+              <div id={styles.profileName}>{userName}</div>
             </div>
           </div>
           <li className={`${styles.userMenuLink}`}>
@@ -83,7 +102,7 @@ export default function AvatarDropdown({ onLogout }) {
             </Link>
           </li>
           <div className={`${styles.footer}`}>
-            <li className={`${styles.userMenuLink}`}>
+            {/* <li className={`${styles.userMenuLink}`}>
               <a className={`${styles.userMenuLink}`} href="#">
                 <i
                   className="bi bi-gear"
@@ -91,7 +110,7 @@ export default function AvatarDropdown({ onLogout }) {
                 ></i>
                 <div>Settings</div>
               </a>
-            </li>
+            </li> */}
             <li className={`${styles.userMenuLink}`}>
               <a
                 className={`${styles.userMenuLink}`}

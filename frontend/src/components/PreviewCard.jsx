@@ -175,6 +175,7 @@ export default function PreviewCard({
             <InquiryModal
               isOpen={isInquiryModalOpen}
               onRequestClose={closeInquiryModal}
+              collegeId={id}
             />
           )}
         </div>

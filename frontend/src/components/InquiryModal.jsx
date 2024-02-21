@@ -1,11 +1,10 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import styles from "./InquiryModal.module.css";
+import axios from "axios";
 
-export default function InquiryModal({ isOpen, onRequestClose }) {
+export default function InquiryModal({ isOpen, onRequestClose, collegeId }) {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     subject: "",
     message: "",
   });
@@ -22,16 +21,30 @@ export default function InquiryModal({ isOpen, onRequestClose }) {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
-    onRequestClose();
+    try {
+      const dataWithUserId = {
+        ...formData,
+        collegeId: collegeId,
+      };
+
+      const response = await axios.post(
+        "http://localhost:8000/inquery/",
+        dataWithUserId
+      );
+      console.log("Response:", response.data);
+      // Optionally, handle success response here
+      setFormData({
+        subject: "",
+        message: "",
+      });
+      onRequestClose();
+    } catch (error) {
+      console.error("Error:", error);
+      // Optionally, handle error response here
+    }
   };
 
   return (
@@ -50,8 +63,8 @@ export default function InquiryModal({ isOpen, onRequestClose }) {
           padding: "20px",
           borderRadius: "8px",
           border: "none",
-          width: "auto", // Adjust width automatically
-          height: "auto", // Adjust height automatically
+          width: "auto",
+          height: "auto",
           overflow: "auto", // Enable scrolling if content exceeds dimensions
         },
       }}
