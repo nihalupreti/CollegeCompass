@@ -61,6 +61,7 @@ export default function PreviewCard({
   }, [id, isLogged]);
 
   const toggleBookmark = async () => {
+    console.log("Toggling bookmark for ID:", id); // Add this line
     // Send the item to the Django backend when bookmarked
     if (isLogged) {
       const csrfToken = Cookies.get("csrftoken");

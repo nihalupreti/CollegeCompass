@@ -13,13 +13,15 @@ export default function BookmarkPage({ bookmarkedColleges }) {
         maxWidth: "1200px",
       }}
     >
-      <Bookmark bookmarks={bookmarkedColleges} />
-      <Bookmark />
-      <Bookmark />
-
-      <div style={{ paddingTop: "70px", textAlign: "center" }}>
-        <h1>There are no bookmarks yet!!!</h1>
-      </div>
+      {bookmarkedColleges.length > 0 ? (
+        bookmarkedColleges.map((college) => (
+          <Bookmark key={college.id} bookmarks={college} />
+        ))
+      ) : (
+        <div style={{ paddingTop: "70px", textAlign: "center" }}>
+          <h1>There are no bookmarks yet!!!</h1>
+        </div>
+      )}
     </div>
   );
 }

@@ -5,7 +5,7 @@
   background-position: center;
   background-attachment: fixed;
   margin: 0;
-  padding: 2rem 0;
+  padding: 10rem 0;
   box-sizing: border-box;
 }
 .card {
@@ -16,17 +16,6 @@
   overflow: hidden;
   border-radius: 2rem;
   box-shadow: 0 1rem 1.5rem rgba(0, 0, 0, 0.5);
-}
-
-.card .menu {
-  width: 100%;
-  height: 5.5rem;
-  padding: 1rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-  position: relative;
-  box-sizing: border-box;
 }
 .card h2.name {
   text-align: center;
@@ -44,42 +33,6 @@
   display: flex;
   flex-direction: column;
   order: 99;
-}
-.card .actions .follow-info {
-  padding: 0 0 1rem;
-  display: flex;
-}
-.card .actions .follow-info h2 {
-  text-align: center;
-  width: 50%;
-  margin: 0;
-  box-sizing: border-box;
-}
-.card .actions .follow-info h2 a {
-  text-decoration: none;
-  padding: 0.8rem;
-  display: flex;
-  flex-direction: column;
-  border-radius: 0.8rem;
-  transition: background-color 0.1s ease-in-out;
-}
-.card .actions .follow-info h2 a span {
-  color: #1c9eff;
-  font-weight: 700;
-  transform-origin: bottom;
-  transform: scaleY(1.3);
-  transition: color 0.1s ease-in-out;
-}
-.card .actions .follow-info h2 a small {
-  color: #afafaf;
-  font-size: 0.85rem;
-  font-weight: 400;
-}
-.card .actions .follow-info h2 a:hover {
-  background-color: #f2f2f2;
-}
-.card .actions .follow-info h2 a:hover span {
-  color: #007ad6;
 }
 .card .actions .follow-btn button {
   color: inherit;
@@ -105,6 +58,9 @@
 }
 .card .desc {
   text-align: justify;
-  padding: 0 2rem 2.5rem;
+  padding: 0 2rem 1.5rem;
   order: 100;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }

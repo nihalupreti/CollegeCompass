@@ -7,24 +7,24 @@ export default function CompareCard({ collegeData }) {
       <div className={styles["item"]}>
         <div className={styles["photo"]}>
           <img
-            src={collegeData.college_image} // Use the college image from collegeData
+            src={"http://localhost:8000" + collegeData.college_image} // Use the college image from collegeData
             alt="college-photo"
           />
         </div>
         <div className={styles["information"]}>
           <div className={styles["primary-detail"]}>
-            <h3>{collegeData.college_name}</h3>{" "}
-            {/* Use the college name from collegeData */}
-            <h4>{collegeData.address}</h4>{" "}
-            {/* Use the college address from collegeData */}
+            <h3>{collegeData.college_name}</h3> <h4>{collegeData.address}</h4>{" "}
           </div>
           <div className={styles["secondary-detail"]}>
             <div className={styles["fee"]}>fee: {collegeData.fee}</div>{" "}
-            {/* Use the college fee from collegeData */}
-            <div className={styles["review"]}>review-section-pending</div>
+            <div className={styles["review"]}>
+              affiliation: {collegeData.affiliation}
+            </div>
             <div className={styles["website"]}>
-              website: <a href={collegeData.website}>{collegeData.website}</a>{" "}
-              {/* Use the college website from collegeData */}
+              website:{" "}
+              <a href={collegeData.college_website}>
+                {collegeData.college_website}
+              </a>{" "}
             </div>
           </div>
           <div className={styles["info-buttons"]}>

@@ -36,7 +36,7 @@ export default function Filter({ onFilterChange }) {
 
       <div className="filter-group">
         <div className="slider-container">
-          <div className="filter-group-header">Prices</div>
+          <div className="filter-group-header">Price</div>
           <input
             type="range"
             max={1000000}

@@ -129,33 +129,32 @@ class SearchView(APIView):
 
 
 @method_decorator(login_required, name='post')
-class BookmarkView(View):
+class BookmarkView(APIView):
     def post(self, request, *args, **kwargs):
         try:
-            college_id = self.request.POST.get('id')
-            if college_id:
-                bookmarked_items = request.COOKIES.get('bookmarked_items', '').split(',')
+            college_id = self.request.data.get('id')
+            if college_id is not None:
+                bookmarked_items = request.session.get('bookmarked_items', [])
                 if college_id in bookmarked_items:
                     bookmarked_items.remove(college_id)
-                    response = JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'}, status=200)
+                    request.session['bookmarked_items'] = bookmarked_items
+                    return JsonResponse({'success': True, 'message': 'Item removed from bookmarks.'},status=200)
                 else:
                     bookmarked_items.append(college_id)
-                    response = JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'}, status=200)
-
-                # Set the bookmarked_items cookie with a 30-day expiration
-                response.set_cookie('bookmarked_items', ','.join(bookmarked_items), expires=timezone.now() + timezone.timedelta(days=30))
-                return response
+                    request.session['bookmarked_items'] = bookmarked_items
+                    return JsonResponse({'success': True, 'message': 'Item bookmarked successfully.'}, status=200)
             return JsonResponse({'success': False, 'message': 'Invalid request. Missing item_id.'}, status=400)
-        except ValueError:
-            return JsonResponse({'success': False, 'message': 'Invalid request.'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON format in the request body.'}, status=400)
 
 
 def get_bookmarked_items(request):
     if request.user.is_authenticated:
-        bookmarked_items = request.COOKIES.get('bookmarked_items', '').split(',')
+        bookmarked_items = request.session.get('bookmarked_items', [])
         return JsonResponse({'success': True, 'bookmarked_items': bookmarked_items})
     else:
         return JsonResponse({'success': False, 'message': 'User is not authenticated'}, status=401)
+
 
 
 @csrf_protect

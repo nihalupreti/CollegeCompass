@@ -1,5 +1,13 @@
 import styles from "./Bookmark.module.css";
 
+function truncateText(text) {
+  const maxLength = 4 * 40; // Assuming average line length of 40 characters
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + " ..."; // Truncate and add ellipsis
+  }
+  return text;
+}
+
 export default function Bookmark({ bookmarks }) {
   return (
     <div className={styles.body}>
@@ -7,7 +15,8 @@ export default function Bookmark({ bookmarks }) {
         <div
           style={{
             backgroundImage:
-              "url(https://images.unsplash.com/photo-1545703549-7bdb1d01b734?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ)",
+              "url(http://localhost:8000" + bookmarks.college_image + ")",
+
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
@@ -21,27 +30,15 @@ export default function Bookmark({ bookmarks }) {
         ></div>
 
         <h2 className={styles.name}>{bookmarks.college_name}</h2>
-        <div className={styles.title}>{bookmarks.affilation}</div>
+        <div className={styles.title}>{bookmarks.address}</div>
         <div className={styles.actions}>
-          <div className={styles["follow-info"]}>
-            <h2>
-              <a href="#">
-                <span>12</span>
-                <small>Followers</small>
-              </a>
-            </h2>
-            <h2>
-              <a href="#">
-                <span>1000</span>
-                <small>Following</small>
-              </a>
-            </h2>
-          </div>
           <div className={styles["follow-btn"]}>
             <button>Details</button>
           </div>
         </div>
-        <div className={styles.desc}>{bookmarks.excerpt}</div>
+        <div>
+          <div className={styles.desc}>{truncateText(bookmarks.excerpt)}</div>
+        </div>
       </div>
     </div>
   );

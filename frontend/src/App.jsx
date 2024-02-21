@@ -22,16 +22,26 @@ function App() {
   const [bookmarkedItems, setBookmarkedItems] = useState([]);
 
   useEffect(() => {
-    // Fetch bookmarked items from the cookie and set the state
-    const getBookmarkedItemsFromCookie = () => {
-      const bookmarkedItemsString = Cookies.get("bookmarked_items");
-      if (bookmarkedItemsString) {
-        const parsedItems = JSON.parse(bookmarkedItemsString);
-        setBookmarkedItems(parsedItems);
+    const getBookmarkedItems = async () => {
+      const csrfToken = Cookies.get("csrftoken");
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/get_bookmarked_items/",
+          {
+            withCredentials: true,
+            headers: {
+              "X-CSRFToken": csrfToken,
+            },
+          }
+        );
+        const bookmarkedItems = response.data["bookmarked_items"];
+        setBookmarkedItems(bookmarkedItems);
+      } catch (error) {
+        console.error("Error fetching bookmarked items:", error);
       }
     };
 
-    getBookmarkedItemsFromCookie();
+    getBookmarkedItems();
   }, []);
 
   useEffect(() => {
